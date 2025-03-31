@@ -2,24 +2,27 @@ package ua.com.javarush.gnew.controller.ui;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import ua.com.javarush.gnew.entity.Contact;
+import ua.com.javarush.gnew.repository.ContactRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @WebServlet("")
 public class HomeController extends BaseServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private final ContactRepository contactRepository = new ContactRepository();
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        List<Contact> contacts = contactRepository.getAll();
 
         context.setVariable("projectName", "Contact Manager");
-
-        log.info("Processing home page");
+        context.setVariable("contacts", contacts);
 
         templateEngine.process("home", context, resp.getWriter());
     }

@@ -1,6 +1,5 @@
 package ua.com.javarush.gnew.controller.ui;
 
-import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,8 +21,5 @@ public class Contacts extends HttpServlet {
 
         List<Contact> all = contactRepository.getAll();
 
-        req.setAttribute("contacts", all);
-
-        req.getRequestDispatcher("/WEB-INF/views/contacts.jsp").forward(req, resp);
     }
 }

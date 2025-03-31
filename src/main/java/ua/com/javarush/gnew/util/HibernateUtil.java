@@ -15,7 +15,7 @@ import java.util.Properties;
 public class HibernateUtil {
 
     @Getter
-    private static SessionFactory sessionFactory;
+    private static final SessionFactory sessionFactory;
 
     static {
         try {

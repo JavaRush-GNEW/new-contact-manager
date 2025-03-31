@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
-    <title>Contact manager</title>
+    <title>Contact Manager</title>
     <link th:href="@{/generated/css/main.css}" rel="stylesheet">
 </head>
-
-
 <body>
 <div th:replace="~{components/header-component}"></div>
 
 <div class="container">
-    Hello world@! asdasd
-    <div th:text="${projectName}"> </div>
-    asdasd sadas
+    <!-- Display the project name -->
+    <div th:text="${projectName}"></div>
 
-
-    Hello
-
+    <!-- Table to display contacts' id and name -->
+    <div class="overflow-x-auto rounded border border-gray-300 shadow-sm mt-4">
+        <table class="min-w-full divide-y-2 divide-gray-200">
+            <thead class="ltr:text-left rtl:text-right">
+            <tr class="font-medium text-gray-900">
+                <th class="px-3 py-2 whitespace-nowrap">ID</th>
+                <th class="px-3 py-2 whitespace-nowrap">Name</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+            <tr th:each="contact : ${contacts}" class="text-gray-900">
+                <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.id}">ID</td>
+                <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.name}">Name</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
+</html>

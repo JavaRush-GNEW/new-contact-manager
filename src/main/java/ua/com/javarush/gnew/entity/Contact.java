@@ -3,7 +3,6 @@ package ua.com.javarush.gnew.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +19,10 @@ import java.util.List;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id;
+    private int id;
 
     @Column(name = "name")
-    public String name;
+    private String name;
 
     // Consider switching to LAZY loading if appropriate.
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
