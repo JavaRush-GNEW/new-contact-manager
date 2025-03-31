@@ -2,7 +2,10 @@ package ua.com.javarush.gnew.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +15,8 @@ import java.util.List;
                 query = "from Contact where name= :name"
         )
 })
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "contact")
@@ -33,4 +37,19 @@ public class Contact {
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SocialNetwork> networks = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+        return id == contact.id && name.equals(contact.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
 }
