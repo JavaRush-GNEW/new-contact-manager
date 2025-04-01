@@ -1,0 +1,18 @@
+### Create a contact
+POST {{host}}/{{api.path}}/{{api.version}}/contact
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "emails": [
+    {"email": "john.doe@example.com"},
+    {"email": "j.doe@example.org"}
+  ],
+  "phones": [
+    {"phone": "+1234567890"},
+    {"phone": "+0987654321"}
+  ],
+  "networks": [
+    {"label": "github", "account": "johnGithub"}
+  ]
+}
