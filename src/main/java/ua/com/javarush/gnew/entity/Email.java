@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.entity;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,11 @@ public class Email {
     private Integer id;
 
     @Column(name = "label", length = 45)
+    @Expose
     private String label;
 
     @Column(name = "email", nullable = false)
+    @Expose
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

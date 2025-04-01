@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.entity;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,11 @@ public class SocialNetwork {
     private int id;
 
     @Column(name = "label")
+    @Expose
     private String label;
 
     @Column(name = "account")
+    @Expose
     private String account;
 
     @ManyToOne(fetch = FetchType.LAZY)

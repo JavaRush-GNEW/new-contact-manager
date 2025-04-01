@@ -1,7 +1,7 @@
 package ua.com.javarush.gnew.entity;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,19 +23,24 @@ import java.util.List;
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private int id;
 
     @Column(name = "name")
+    @Expose
     private String name;
 
     // Consider switching to LAZY loading if appropriate.
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Expose
     private List<Email> emails = new ArrayList<>();
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Expose
     private List<Phone> phones = new ArrayList<>();
 
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Expose
     private List<SocialNetwork> networks = new ArrayList<>();
 
     @Override

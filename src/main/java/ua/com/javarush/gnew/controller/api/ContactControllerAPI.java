@@ -1,6 +1,7 @@
 package ua.com.javarush.gnew.controller.api;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,9 @@ public class ContactControllerAPI extends HttpServlet {
 //    private static final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
     private final ContactRepository contactRepository = new ContactRepository();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
