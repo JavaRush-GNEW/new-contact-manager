@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @WebServlet("")
-public class HomeController extends BaseServlet {
+public class HomeServlet extends BaseServlet {
 
     private final ContactRepository contactRepository = new ContactRepository();
 

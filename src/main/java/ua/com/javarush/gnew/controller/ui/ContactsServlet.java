@@ -2,7 +2,6 @@ package ua.com.javarush.gnew.controller.ui;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ua.com.javarush.gnew.entity.Contact;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/contacts")
-public class Contacts extends HttpServlet {
+public class ContactsServlet extends BaseServlet {
 
     private final ContactRepository contactRepository = new ContactRepository();
 

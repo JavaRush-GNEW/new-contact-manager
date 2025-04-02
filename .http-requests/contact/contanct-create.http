@@ -1,3 +1,7 @@
+### Get a contact by id
+GET {{host}}/{{api.path}}/{{api.version}}/contact?id=1
+
+
 ### Create a contact
 POST {{host}}/{{api.path}}/{{api.version}}/contact
 Content-Type: application/json

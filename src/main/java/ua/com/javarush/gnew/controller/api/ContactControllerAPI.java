@@ -40,7 +40,7 @@ public class ContactControllerAPI extends HttpServlet {
 
         try {
             int id = Integer.parseInt(idParam);
-            Optional<Contact> contactOpt = contactRepository.get(id);
+            Optional<Contact> contactOpt = contactRepository.find(id);
             if (contactOpt.isPresent()) {
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.getWriter().println(gson.toJson(contactOpt.get()));
