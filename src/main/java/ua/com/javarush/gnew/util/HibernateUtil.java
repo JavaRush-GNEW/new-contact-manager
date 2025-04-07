@@ -37,8 +37,8 @@ public class HibernateUtil {
             hibernate.setProperty("hibernate.connection.username", dbUser);
             hibernate.setProperty("hibernate.connection.password", dbPassword);
 
-            hibernate.setProperty("hibernate.show_sql", "true");
-            hibernate.setProperty("hibernate.format_sql", "true");
+            // hibernate.setProperty("hibernate.show_sql", "true");
+            // hibernate.setProperty("hibernate.format_sql", "true");
             hibernate.setProperty("hibernate.hbm2ddl.auto", "update");
 
             Configuration configuration = new Configuration();
