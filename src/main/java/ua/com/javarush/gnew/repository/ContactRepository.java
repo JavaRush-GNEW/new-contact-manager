@@ -1,12 +1,13 @@
 package ua.com.javarush.gnew.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import ua.com.javarush.gnew.entity.Contact;
 import ua.com.javarush.gnew.util.HibernateUtil;
 
 import java.util.List;
-
+@Slf4j
 public class ContactRepository extends BaseRepository<Contact, Integer> {
 
     public ContactRepository() {
@@ -16,8 +17,11 @@ public class ContactRepository extends BaseRepository<Contact, Integer> {
 
     public List<Contact> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            log.debug("Retrieving all contacts");
             Query<Contact> query = session.createQuery("from Contact");
-            return query.list();
+            List<Contact> contacts = query.list();
+            log.info("Found {} contacts", contacts.size());
+            return contacts;
         }
     }
 
@@ -25,17 +29,21 @@ public class ContactRepository extends BaseRepository<Contact, Integer> {
 
     public List<Contact> findByName(String name) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            log.debug("Search contacts by name: {}", name);
             Query<Contact> namedQuery = session.getNamedQuery("Contact.findByName");
             namedQuery.setParameter("name", name);
-
-            return namedQuery.list();
+            List<Contact> contacts = namedQuery.list();
+            log.info("Found {} contacts with name {}", contacts.size(), name);
+            return contacts;
         }
     }
 
 
     public List<Contact> findContactWithEmails() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            log.debug("Search for contacts with emails");
             List<Contact> list = session.createQuery("SELECT DISTINCT c FROM Contact c WHERE c.emails IS NOT EMPTY", Contact.class).list();
+            log.info("Found {} contacts whit emails", list.size());
             return list;
         }
     }
