@@ -1,0 +1,17 @@
+services:
+  # PostgreSQL Database Service
+  postgres:
+    image: postgres:17
+    container_name: postgres_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root           # Database username
+      POSTGRES_PASSWORD: root   # Database password
+      POSTGRES_DB: contact_manager_dev         # Database name
+    ports:
+      - "5432:5432"                  # Exposes port 5432 to host
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persists database data
+
+volumes:
+  postgres_data:
