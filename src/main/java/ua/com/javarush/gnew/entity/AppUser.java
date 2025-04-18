@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -57,4 +58,15 @@ public class AppUser {
     @Expose
     private List<ContactBook> contactBooks;
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        AppUser appUser = (AppUser) o;
+        return getId() == appUser.getId() && Objects.equals(getFirstName(), appUser.getFirstName()) && Objects.equals(getLastName(), appUser.getLastName()) && Objects.equals(getUserName(), appUser.getUserName()) && Objects.equals(getPassword(), appUser.getPassword()) && Objects.equals(getEmail(), appUser.getEmail()) && Objects.equals(getCreateDate(), appUser.getCreateDate()) && Objects.equals(getModifyDate(), appUser.getModifyDate()) && Objects.equals(getContactBooks(), appUser.getContactBooks());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getUserName(), getPassword(), getEmail(), getCreateDate(), getModifyDate(), getContactBooks());
+    }
 }

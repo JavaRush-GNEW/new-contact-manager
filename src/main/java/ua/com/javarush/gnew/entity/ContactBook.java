@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -42,5 +43,15 @@ public class ContactBook {
     @Column(name = "modify_date")
     private Date modifyDate;
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactBook that = (ContactBook) o;
+        return getId() == that.getId() && Objects.equals(getOwner(), that.getOwner()) && Objects.equals(getContacts(), that.getContacts()) && Objects.equals(getCreateDate(), that.getCreateDate()) && Objects.equals(getModifyDate(), that.getModifyDate());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getOwner(), getContacts(), getCreateDate(), getModifyDate());
+    }
 }
