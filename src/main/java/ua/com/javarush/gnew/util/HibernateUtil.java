@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import ua.com.javarush.gnew.entity.Contact;
-import ua.com.javarush.gnew.entity.Email;
-import ua.com.javarush.gnew.entity.Phone;
-import ua.com.javarush.gnew.entity.SocialNetwork;
+import ua.com.javarush.gnew.entity.*;
 
 import java.util.Properties;
 
@@ -46,6 +43,8 @@ public class HibernateUtil {
             configuration.addAnnotatedClass(SocialNetwork.class);
             configuration.addAnnotatedClass(Email.class);
             configuration.addAnnotatedClass(Phone.class);
+            configuration.addAnnotatedClass(AppUser.class);
+            configuration.addAnnotatedClass(ContactBook.class);
 
             sessionFactory = configuration.buildSessionFactory();
 

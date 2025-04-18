@@ -29,6 +29,11 @@ public class Contact {
     @Expose
     private int id;
 
+
+    @ManyToOne
+    @JoinColumn(name = "contact_book_id")
+    private ContactBook contactBook;
+
     @Column(name = "name")
     @Expose
     private String name;
