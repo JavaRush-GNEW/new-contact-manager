@@ -112,6 +112,12 @@
             <version>2.20.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.googlejavaformat</groupId>
+            <artifactId>google-java-format</artifactId>
+            <version>1.26.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -190,6 +196,20 @@
                     <installDirectory>target</installDirectory>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.spotify.fmt</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.25</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>
