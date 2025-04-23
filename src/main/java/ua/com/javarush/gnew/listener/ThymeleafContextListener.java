@@ -9,12 +9,12 @@ import ua.com.javarush.gnew.util.ThymeleafUtil;
 
 @WebListener
 public class ThymeleafContextListener implements ServletContextListener {
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        ServletContext servletContext = sce.getServletContext();
+  @Override
+  public void contextInitialized(ServletContextEvent sce) {
+    ServletContext servletContext = sce.getServletContext();
 
-        TemplateEngine templateEngine = ThymeleafUtil.buildTemplateEngine(servletContext);
+    TemplateEngine templateEngine = ThymeleafUtil.buildTemplateEngine(servletContext);
 
-        servletContext.setAttribute("templateEngine", templateEngine);
-    }
+    servletContext.setAttribute("templateEngine", templateEngine);
+  }
 }

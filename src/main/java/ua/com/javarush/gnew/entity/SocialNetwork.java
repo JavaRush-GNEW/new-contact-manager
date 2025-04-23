@@ -10,29 +10,33 @@ import lombok.Setter;
 @Entity
 @Table(name = "social_network")
 public class SocialNetwork {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(name = "label")
-    @Expose
-    private String label;
+  @Column(name = "label")
+  @Expose
+  private String label;
 
-    @Column(name = "account")
-    @Expose
-    private String account;
+  @Column(name = "account")
+  @Expose
+  private String account;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contact_id", nullable = false)
-    private Contact contact;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "contact_id", nullable = false)
+  private Contact contact;
 
-
-    @Override
-    public String toString() {
-        return "SocialNetwork{" +
-                "id=" + id +
-                ", label='" + label + '\'' +
-                ", account='" + account + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "SocialNetwork{"
+        + "id="
+        + id
+        + ", label='"
+        + label
+        + '\''
+        + ", account='"
+        + account
+        + '\''
+        + '}';
+  }
 }

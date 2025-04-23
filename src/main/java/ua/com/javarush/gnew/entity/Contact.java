@@ -2,15 +2,14 @@ package ua.com.javarush.gnew.entity;
 
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @NamedQueries({@NamedQuery(name = "Contact.findByName", query = "from Contact where name= :name")})
 @Getter
