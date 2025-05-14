@@ -112,12 +112,6 @@
             <version>2.20.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.googlejavaformat</groupId>
-            <artifactId>google-java-format</artifactId>
-            <version>1.26.0</version>
-        </dependency>
-
     </dependencies>
 
     <build>
@@ -203,6 +197,8 @@
                 <version>2.25</version>
                 <executions>
                     <execution>
+                        <id>format-code</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>format</goal>
                         </goals>
