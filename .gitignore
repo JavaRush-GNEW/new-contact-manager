@@ -1,5 +1,10 @@
 ### general template
 
+# Eclipse-specific files
+.project
+.classpath
+.settings/
+
 /src/main/frontend/node_modules/
 /src/main/webapp/generated/
 
@@ -291,3 +296,5 @@ Temporary Items
 .apdisk
 
 
+/target/
+/.classpath
