@@ -1,5 +1,7 @@
 # New Contact Manager
 
-# Quick setup
-
-Please read this docu: https://github.com/google/google-java-format/blob/master/README.md#intellij-jre-config
+## TODO
+1. Implement Logger
+2. Google code style
+3. Implement full CRUD API
+4. Fix UI

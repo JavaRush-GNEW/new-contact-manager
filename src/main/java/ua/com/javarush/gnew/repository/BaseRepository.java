@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -57,7 +58,7 @@ public abstract class BaseRepository<T, ID extends Serializable> {
             session.remove(contact);
             log.info("Removed entity: {} ID {}", entityClass.getSimpleName(), id);
           } else {
-            log.warn("Entity {} ID {} not found", entityClass.getSimpleName(), id);
+           log.warn("Entity {} ID {} not found", entityClass.getSimpleName(), id);
           }
         });
   }
