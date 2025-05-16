@@ -1,1 +1,1 @@
-# Contact manager
+# Contact manager by JR group "NEW"
