@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Manager</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div th:replace="~{components/header-component}"></div>
+
+<div class="container">
+
+    <div th:replace="~{components/input :: input(Email, email, email) }"></div>
+    <div th:replace="~{components/input :: input(Password, password, password) }"></div>
+
+    <a
+            class="inline-flex items-center gap-2 rounded-sm border border-indigo-600 px-8 py-3 text-indigo-600 hover:bg-indigo-600 hover:text-white focus:ring-3 focus:outline-hidden"
+            href="#"
+    >
+        <span class="text-sm font-medium"> Login </span>
+
+        <svg
+                class="size-5 shadow-sm rtl:rotate-180"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+        >
+            <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+        </svg>
+    </a>
+
+</div>
+
+
+<div th:replace="~{components/footer-component}"></div>
+
+</body>
+
+</html>

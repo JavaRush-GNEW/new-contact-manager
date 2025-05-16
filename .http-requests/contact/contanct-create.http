@@ -1,0 +1,22 @@
+### Get a contact by id
+GET {{host}}/{{api.path}}/{{api.version}}/contact?id=2
+
+
+### Create a contact
+POST {{host}}/{{api.path}}/{{api.version}}/contact
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "emails": [
+    {"email": "john.doe2@example.com"},
+    {"email": "j2.doe@example.org"}
+  ],
+  "phones": [
+    {"phone": "+12345678902"},
+    {"phone": "+09876543212"}
+  ],
+  "networks": [
+    {"label": "github", "account": "johnGithub2"}
+  ]
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+<div class="flex items-center justify-center min-h-screen">
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+        <p class="m-0">
+            <b th:text="${error} ?: 'Something went wrong!'" class="font-bold"></b>
+            Soon it will be fixed, but for now, please return to the
+            <a href="/" th:href="@{/}" class="underline text-blue-700 hover:text-blue-900">Home page</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

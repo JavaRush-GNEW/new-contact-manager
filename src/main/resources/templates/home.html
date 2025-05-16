@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Manager</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div th:replace="~{components/header-component}"></div>
+
+<div class="container">
+    <!-- Display the project name -->
+    <div th:text="${tableName}"></div>
+
+    <!--/*@thymesVar id="contacts" type="java.util.List"*/-->
+    <div th:replace="~{components/table-component :: contactTable( ${contacts} ) }"></div>
+</div>
+
+
+<div th:replace="~{components/footer-component}"></div>
+
+</body>
+
+</html>
