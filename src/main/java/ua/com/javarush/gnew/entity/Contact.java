@@ -2,67 +2,77 @@ package ua.com.javarush.gnew.entity;
 
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@NamedQueries({@NamedQuery(name = "Contact.findByName", query = "from Contact where name= :name")})
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@NamedQueries({
+        @NamedQuery(
+                name = "Contact.findByName",
+                query = "from Contact where name= :name"
+        )
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "contact")
 public class Contact {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Expose
-  private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
+    private int id;
 
-  @Column(name = "name")
-  @Expose
-  private String name;
 
-  // Consider switching to LAZY loading if appropriate.
-  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @Expose
-  private List<Email> emails = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "contact_book_id")
+    private ContactBook contactBook;
 
-  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @Expose
-  private List<Phone> phones = new ArrayList<>();
+    @Column(name = "name")
+    @Expose
+    private String name;
 
-  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @Expose
-  private List<SocialNetwork> networks = new ArrayList<>();
+    // Consider switching to LAZY loading if appropriate.
+    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Expose
+    private List<Email> emails = new ArrayList<>();
 
-  @CreationTimestamp
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "create_date")
-  private Date createDate;
+    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Expose
+    private List<Phone> phones = new ArrayList<>();
 
-  @UpdateTimestamp
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "modify_date")
-  private Date modifyDate;
+    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Expose
+    private List<SocialNetwork> networks = new ArrayList<>();
 
-  @Override
-  public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) return false;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date")
+    private Date createDate;
 
-    Contact contact = (Contact) o;
-    return id == contact.id && name.equals(contact.name);
-  }
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "modify_date")
+    private Date modifyDate;
 
-  @Override
-  public int hashCode() {
-    int result = id;
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
 
-    result = 31 * result + name.hashCode();
-    return result;
-  }
+        Contact contact = (Contact) o;
+        return id == contact.id && name.equals(contact.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
+    }
 }
