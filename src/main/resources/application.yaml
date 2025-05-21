@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    default: dev
+    active: ${SPRING_PROFILE:dev}
+  application:
+    name: contact-manager-spring-boot
