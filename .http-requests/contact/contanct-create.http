@@ -1,5 +1,5 @@
 ### Get a contact by id
-GET {{host}}/{{api.path}}/{{api.version}}/contact?id=2
+GET {{host}}/{{api.path}}/{{api.version}}/contact?id=1
 
 
 ### Create a contact
