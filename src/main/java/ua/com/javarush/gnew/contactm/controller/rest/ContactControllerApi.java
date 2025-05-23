@@ -12,11 +12,11 @@ import ua.com.javarush.gnew.contactm.repository.ContactRepository;
 
 @RestController
 @RequestMapping("/api/v1/contact")
-public class ContactController {
+public class ContactControllerApi {
 
   private final ContactRepository contactRepository;
 
-  public ContactController(ContactRepository contactRepository) {
+  public ContactControllerApi(ContactRepository contactRepository) {
     this.contactRepository = contactRepository;
   }
 

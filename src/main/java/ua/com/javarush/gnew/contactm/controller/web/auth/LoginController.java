@@ -1,4 +1,4 @@
-package ua.com.javarush.gnew.contactm.controller.web;
+package ua.com.javarush.gnew.contactm.controller.web.auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

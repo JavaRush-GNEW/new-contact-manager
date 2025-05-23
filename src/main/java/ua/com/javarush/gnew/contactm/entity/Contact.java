@@ -26,7 +26,7 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Expose
-    private int id;
+    private long id;
 
 
     @ManyToOne
@@ -70,8 +70,8 @@ public class Contact {
 
     @Override
     public int hashCode() {
-        int result = id;
+        long result = id;
         result = 31 * result + name.hashCode();
-        return result;
+        return (int) result;
     }
 }

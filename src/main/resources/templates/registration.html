@@ -11,11 +11,14 @@
 
 <div th:replace="~{components/header-component}"></div>
 
-    <form th:action="@{/login}" method="post">
-        <input type="text" name="userName" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="submit" value="Login">
-    </form>
+<form th:action="@{/registration}" th:object="${user}" method="post">
+    <input name="userName" type="text" placeholder="Username" >
+    <input name="password" type="text" placeholder="Password" >
+
+    <input type="submit" value="Register" >
+</form>
+
+
 
 <div th:replace="~{components/footer-component}"></div>
 

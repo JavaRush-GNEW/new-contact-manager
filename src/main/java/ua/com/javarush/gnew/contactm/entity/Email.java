@@ -14,7 +14,7 @@ import lombok.Setter;
 public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private long id;
 
     @Column(name = "label", length = 45)
     @Expose

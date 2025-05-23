@@ -21,7 +21,7 @@ public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Expose
-    private int id;
+    private long id;
 
     @Column(name = "first_name")
     @Expose
