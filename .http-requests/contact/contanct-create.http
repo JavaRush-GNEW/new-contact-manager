@@ -20,3 +20,23 @@ Content-Type: application/json
     {"label": "github", "account": "johnGithub2"}
   ]
 }
+
+### Update a contact
+PUT {{host}}/{{api.path}}/{{api.version}}/contact?id=2
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated",
+  "emails": [
+    {"email": "john.updated@example.com"}
+  ],
+  "phones": [
+    {"phone": "+11111111111"}
+  ],
+  "networks": [
+    {"label": "linkedin", "account": "johnLinkedIn"}
+  ]
+}
+
+### Delete a contact
+DELETE {{host}}/{{api.path}}/{{api.version}}/contact?id=2
