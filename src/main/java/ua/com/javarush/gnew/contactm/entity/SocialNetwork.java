@@ -12,7 +12,7 @@ import lombok.Setter;
 public class SocialNetwork {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(name = "label")
     @Expose

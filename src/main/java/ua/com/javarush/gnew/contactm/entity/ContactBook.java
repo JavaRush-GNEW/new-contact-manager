@@ -22,7 +22,7 @@ public class ContactBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Expose
-    private int id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "app_user_id")

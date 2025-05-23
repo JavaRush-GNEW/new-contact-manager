@@ -12,6 +12,7 @@
                 <th class="px-3 py-2 whitespace-nowrap">Email</th>
                 <th class="px-3 py-2 whitespace-nowrap">Phone</th>
                 <th class="px-3 py-2 whitespace-nowrap">Social network</th>
+                <th class="px-3 py-2 whitespace-nowrap">Action</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -37,6 +38,10 @@
                         <span th:text="${networkObject.label}"></span>
                         <span th:text="${networkObject.account}"></span>
                     </div>
+                </td>
+
+                <td>
+                    <button> <a th:href="@{|/contact/edit/${contact.id}}">Edit</a> </button>
                 </td>
             </tr>
             </tbody>
