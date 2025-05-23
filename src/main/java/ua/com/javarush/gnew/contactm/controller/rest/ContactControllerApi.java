@@ -49,4 +49,50 @@ public class ContactControllerApi {
     Contact saved = contactRepository.save(contact);
     return new ResponseEntity<>(saved, HttpStatus.CREATED);
   }
+
+  @PutMapping
+  public ResponseEntity<Contact> update(@RequestParam(value = "id") Long id, @RequestBody Contact updatedContact) {
+    Optional<Contact> existingOpt = contactRepository.findById(id);
+
+    if (existingOpt.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    Contact existing = existingOpt.get();
+
+    existing.setName(updatedContact.getName());
+    existing.setEmails(updatedContact.getEmails());
+    existing.setPhones(updatedContact.getPhones());
+    existing.setNetworks(updatedContact.getNetworks());
+
+    if (existing.getEmails() != null) {
+      for (Email e : existing.getEmails()) {
+        e.setContact(existing);
+      }
+    }
+    if (existing.getPhones() != null) {
+      for (Phone p : existing.getPhones()) {
+        p.setContact(existing);
+      }
+    }
+    if (existing.getNetworks() != null) {
+      for (SocialNetwork n : existing.getNetworks()) {
+        n.setContact(existing);
+      }
+    }
+
+    Contact saved = contactRepository.save(existing);
+    return new ResponseEntity<>(saved, HttpStatus.OK);
+  }
+
+  @DeleteMapping
+  public ResponseEntity<Void> delete(@RequestParam(value = "id") Long id) {
+    Optional<Contact> contactOpt = contactRepository.findById(id);
+    if (contactOpt.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    contactRepository.deleteById(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 }
