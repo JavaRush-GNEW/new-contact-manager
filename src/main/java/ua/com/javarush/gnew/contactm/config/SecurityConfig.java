@@ -21,16 +21,22 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-            .authorizeHttpRequests(request ->
-                    request.requestMatchers("/", "/main.css", "/registration", "/login", "/api/**").permitAll()
-                    .anyRequest().permitAll())
+            .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
+            .authorizeHttpRequests(requests -> requests
+                    .requestMatchers("/", "/main.css", "/registration", "/login", "/api/**").permitAll()
+                    .anyRequest().authenticated()
+            )
             .formLogin(form -> form
                     .loginPage("/login")
                     .defaultSuccessUrl("/", true)
-                    .permitAll())
+                    .permitAll()
+            )
             .logout(logout -> logout.logoutUrl("/logout"));
+
     return http.build();
   }
+
+
 
 
   @Bean
