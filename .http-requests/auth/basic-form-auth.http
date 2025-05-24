@@ -1,0 +1,18 @@
+### Register new user
+POST http://localhost:8080/registration
+Content-Type: application/x-www-form-urlencoded
+
+username=root&password=toor
+
+### Login request
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
+
+username=root&password=toor
+
+#> {% client.global.set("auth_cookie", response.cookies["JSESSIONID"].value) %}
+
+### Logout request
+POST http://localhost:8080/logout
+Content-Type: application/x-www-form-urlencoded
+#Cookie: JSESSIONID=JSESSIONID

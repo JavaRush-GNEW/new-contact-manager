@@ -20,7 +20,7 @@ public class CustomUserDetailsService implements org.springframework.security.co
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    List<AppUser> byUserName = appUserRepository.findByUserName(username);
+    List<AppUser> byUserName = appUserRepository.findByUsername(username);
     if (byUserName.isEmpty()) {
       throw new UsernameNotFoundException(username + " not found");
     }
@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements org.springframework.security.co
     AppUser appUser = byUserName.stream().findFirst().get();
 
     return User.builder()
-            .username(appUser.getUserName())
+            .username(appUser.getUsername())
             .password(appUser.getPassword())
             .roles(UserRole.ADMIN.name()) // @TODO Implement role in the DB
             .build();
