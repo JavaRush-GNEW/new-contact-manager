@@ -12,15 +12,15 @@ import ua.com.javarush.gnew.contactm.entity.AppUser;
 import ua.com.javarush.gnew.contactm.services.AppUserService;
 
 @Controller
-@RequestMapping("/registration")
+@RequestMapping("/register")
 @RequiredArgsConstructor
-public class RegistrationController {
+public class RegisterController {
   private final AppUserService appUserService;
 
   @GetMapping
   public String registration(Model model) {
     model.addAttribute("user", new AppUser());
-    return "registration";
+    return "register";
   }
 
   @PostMapping
