@@ -1,0 +1,5 @@
+server:
+  error:
+    whitelabel:
+      enabled : false # disable the Whitelabel page
+    include-message: always # always include the HTTP message
