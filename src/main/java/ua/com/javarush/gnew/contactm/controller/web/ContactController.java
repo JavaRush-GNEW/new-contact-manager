@@ -4,33 +4,34 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ua.com.javarush.gnew.contactm.entity.Contact;
-import ua.com.javarush.gnew.contactm.repository.ContactRepository;
-
-import java.util.Optional;
+import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
+import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
+import ua.com.javarush.gnew.contactm.services.ContactService;
 
 @Controller
 @RequestMapping("/contact")
 @RequiredArgsConstructor
 public class ContactController {
 
-  private final ContactRepository contactRepository;
+  private final ContactService contactService;
+  private final ContactMapper contactMapper;
 
   @GetMapping("/edit/{id}")
   public String edit(@PathVariable Long id, Model model) {
-    Optional<Contact> byId = contactRepository.findById(id);
-    if (byId.isPresent()) {
-      Contact contact = byId.get();
-      model.addAttribute("contact", contact);
-    }
-
+    ContactDTO dto = contactMapper.toDto(contactService.findById(id));
+    model.addAttribute("contact", dto);
     return "contact/edit";
   }
 
   @PostMapping("/edit")
-  public String save(@ModelAttribute Contact contact) {
-    contactRepository.save(contact);
+  public String save(@ModelAttribute ContactDTO contactDTO) {
+    contactService.save(contactDTO);
     return "redirect:/";
   }
 
+  @PostMapping("/remove/{id}")
+  public String remove(@PathVariable Long id) {
+    contactService.delete(id);
+    return "redirect:/";
+  }
 }
