@@ -11,6 +11,7 @@ import java.util.List;
 public class ContactDTO {
     private long id;
     private String name;
+    private String lastName;
     private List<EmailDTO> emails;
     private List<PhoneDTO> phones;
     private List<SocialNetworkDTO> networks;

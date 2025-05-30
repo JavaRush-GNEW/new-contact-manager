@@ -9,7 +9,8 @@ Content-Type: application/json
 {
   "contacts": [
     {
-      "name": "Alice Smith",
+      "name": "Alice",
+      "lastName": "Smith",
       "emails": [
         {"email": "alice@example.com"}
       ],
@@ -42,7 +43,8 @@ Content-Type: application/json
 {
   "contacts": [
     {
-      "name": "Charlie Updated",
+      "name": "Charlie",
+      "lastName": "Updated",
       "emails": [
         {"email": "charlie@example.com"}
       ],

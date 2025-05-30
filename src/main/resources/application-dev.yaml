@@ -3,3 +3,8 @@ server:
     whitelabel:
       enabled : false # disable the Whitelabel page
     include-message: always # always include the HTTP message
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update

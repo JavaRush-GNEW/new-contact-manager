@@ -9,6 +9,7 @@
             <tr class="font-medium text-gray-900">
                 <th class="px-3 py-2 whitespace-nowrap">ID</th>
                 <th class="px-3 py-2 whitespace-nowrap">Name</th>
+                <th class="px-3 py-2 whitespace-nowrap">Last Name</th>
                 <th class="px-3 py-2 whitespace-nowrap">Email</th>
                 <th class="px-3 py-2 whitespace-nowrap">Phone</th>
                 <th class="px-3 py-2 whitespace-nowrap">Social network</th>
@@ -19,6 +20,7 @@
             <tr th:each="contact : ${contacts}" class="text-gray-900">
                 <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.id}">ID</td>
                 <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.name}">Name</td>
+                <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.lastName}">Last Name</td>
                 <td class="px-3 py-2 whitespace-nowrap">
                     <div th:each="emailObject : ${contact.emails}">
                         <span th:text="${emailObject.label}"></span>
