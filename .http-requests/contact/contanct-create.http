@@ -7,7 +7,8 @@ POST {{host}}/{{api.path}}/{{api.version}}/contact
 Content-Type: application/json
 
 {
-  "name": "John Doe",
+  "name": "John",
+  "lastName": "Doe",
   "emails": [
     {"email": "john.doe2@example.com"},
     {"email": "j2.doe@example.org"}
@@ -26,7 +27,8 @@ PUT {{host}}/{{api.path}}/{{api.version}}/contact?id=2
 Content-Type: application/json
 
 {
-  "name": "John Doe Updated",
+  "name": "John",
+  "lastName": "Doe Updated",
   "emails": [
     {"email": "john.updated@example.com"}
   ],
