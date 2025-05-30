@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +39,10 @@ public class Contact {
     @Expose
     private String name;
 
+    @Column(name = "last_name")
+    @Expose
+    private String lastName;
+
     // Consider switching to LAZY loading if appropriate.
     @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Expose
@@ -62,16 +68,12 @@ public class Contact {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Contact contact = (Contact) o;
-        return id == contact.id && name.equals(contact.name);
+        if (!(o instanceof Contact contact)) return false;
+        return getId() == contact.getId() && Objects.equals(getName(), contact.getName()) && Objects.equals(getLastName(), contact.getLastName());
     }
 
     @Override
     public int hashCode() {
-        long result = id;
-        result = 31 * result + name.hashCode();
-        return (int) result;
+        return Objects.hash(getId(), getName(), getLastName());
     }
 }
