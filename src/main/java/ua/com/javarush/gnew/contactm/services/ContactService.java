@@ -7,6 +7,8 @@ import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ContactService {
@@ -28,5 +30,9 @@ public class ContactService {
 
   public void delete(Long id) {
     contactRepository.deleteById(id);
+  }
+
+  public List<Contact> findAll() {
+    return contactRepository.findAll();
   }
 }
