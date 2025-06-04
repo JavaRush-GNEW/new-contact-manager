@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SocialNetworkDTO {
-    private long id;
-    private String label;
-    private String account;
+  private long id;
+  private String label;
+  private String account;
 }

@@ -9,5 +9,4 @@ public class ContactManagerSpringBootApplication {
   public static void main(String[] args) {
     SpringApplication.run(ContactManagerSpringBootApplication.class, args);
   }
-
 }
