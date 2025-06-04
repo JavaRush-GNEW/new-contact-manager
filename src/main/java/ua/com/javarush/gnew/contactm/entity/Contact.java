@@ -13,58 +13,52 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@NamedQueries({
-        @NamedQuery(
-                name = "Contact.findByName",
-                query = "from Contact where name= :name"
-        )
-})
+@NamedQueries({@NamedQuery(name = "Contact.findByName", query = "from Contact where name= :name")})
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "contact")
 public class Contact {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Expose
+  private long id;
 
+  @ManyToOne
+  @JoinColumn(name = "contact_book_id")
+  private ContactBook contactBook;
 
-    @ManyToOne
-    @JoinColumn(name = "contact_book_id")
-    private ContactBook contactBook;
+  @Column(name = "name")
+  @Expose
+  private String name;
 
-    @Column(name = "name")
-    @Expose
-    private String name;
+  // Consider switching to LAZY loading if appropriate.
+  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @Expose
+  private List<Email> emails = new ArrayList<>();
 
     @Column(name = "last_name")
     @Expose
     private String lastName;
 
-    // Consider switching to LAZY loading if appropriate.
-    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Expose
-    private List<Email> emails = new ArrayList<>();
+  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @Expose
+  private List<Phone> phones = new ArrayList<>();
 
-    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Expose
-    private List<Phone> phones = new ArrayList<>();
+  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @Expose
+  private List<SocialNetwork> networks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Expose
-    private List<SocialNetwork> networks = new ArrayList<>();
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "create_date")
+  private Date createDate;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modify_date")
-    private Date modifyDate;
+  @UpdateTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "modify_date")
+  private Date modifyDate;
 
     @Override
     public boolean equals(Object o) {

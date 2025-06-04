@@ -1,7 +1,7 @@
 package ua.com.javarush.gnew.contactm.controller.web;
 
-import java.util.Map;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -26,7 +26,8 @@ public class CustomErrorController implements ErrorController {
     ServletWebRequest webRequest = new ServletWebRequest(request);
 
     // Pick which fields to include in the map
-    ErrorAttributeOptions options = ErrorAttributeOptions.defaults()
+    ErrorAttributeOptions options =
+        ErrorAttributeOptions.defaults()
             .including(ErrorAttributeOptions.Include.MESSAGE)
             .including(ErrorAttributeOptions.Include.EXCEPTION)
             .including(ErrorAttributeOptions.Include.STACK_TRACE);

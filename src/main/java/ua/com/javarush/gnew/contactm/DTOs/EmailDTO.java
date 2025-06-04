@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class EmailDTO {
-    private long id;
-    private String label;
-    private String email;
+  private long id;
+  private String label;
+  private String email;
 }

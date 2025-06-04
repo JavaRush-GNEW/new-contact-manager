@@ -4,3 +4,10 @@ spring:
     active: ${SPRING_PROFILE:dev}
   application:
     name: contact-manager-spring-boot
+  jpa:
+    hibernate:
+      ddl-auto: update
+  show-sql: true
+  properties:
+    hibernate:
+      format_sql: true		

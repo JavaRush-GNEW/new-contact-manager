@@ -1,12 +1,11 @@
 package ua.com.javarush.gnew.contactm.controller.web;
 
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
-
-import java.util.List;
 
 @Controller
 public class HomeController {
@@ -24,5 +23,4 @@ public class HomeController {
     model.addAttribute("contacts", all);
     return "home";
   }
-
 }
