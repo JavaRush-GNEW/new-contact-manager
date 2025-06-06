@@ -1,13 +1,12 @@
 package ua.com.javarush.gnew.contactm.DTOs;
 
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AppUserDTO {
   private long id;
   private String firstName;

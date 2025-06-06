@@ -20,7 +20,17 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             requests ->
                 requests
-                    .requestMatchers("/", "/main.css", "/img/**", "/register", "/login", "/api/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**")
+                    .requestMatchers(
+                        "/",
+                        "/main.css",
+                        "/img/**",
+                        "/register",
+                        "/login",
+                        "/api/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/webjars/**")
                     .permitAll()
                     .anyRequest()
                     .authenticated())
@@ -34,5 +44,4 @@ public class SecurityConfig {
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
-
 }
