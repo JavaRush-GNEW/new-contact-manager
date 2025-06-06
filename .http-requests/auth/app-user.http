@@ -1,0 +1,11 @@
+###Create AppUser
+POST http://localhost:8080/api/v1/appuser
+Content-Type: application/json
+
+{
+  "firstName": "TestUser",
+  "lastName": "TestUser",
+  "username": "test",
+  "password": "test",
+  "email": "test@example.com"
+}
