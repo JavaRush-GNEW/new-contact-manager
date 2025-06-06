@@ -1,5 +1,10 @@
 package ua.com.javarush.gnew.contactm.controller.rest;
 
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -13,24 +18,16 @@ import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
-@WebMvcTest(value = ContactControllerApi.class,
-        excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@WebMvcTest(
+    value = ContactControllerApi.class,
+    excludeAutoConfiguration = SecurityAutoConfiguration.class)
 class ContactControllerApiTest {
 
-  @Autowired
-  private MockMvc mvc;
+  @Autowired private MockMvc mvc;
 
-  @MockitoBean
-  private ContactRepository contactRepository;
+  @MockitoBean private ContactRepository contactRepository;
 
-  @MockitoBean
-  private ContactMapper contactMapper;
+  @MockitoBean private ContactMapper contactMapper;
 
   @Test
   void getContact_ShouldReturnContactDTOAndStatus200WhenContactExists() throws Exception {
@@ -38,28 +35,20 @@ class ContactControllerApiTest {
     long id = 1L;
     String name = "name";
 
-    Contact contact = Contact.builder()
-            .id(id)
-            .name(name)
-            .build();
+    Contact contact = Contact.builder().id(id).name(name).build();
 
     ContactDTO contactDTO = ContactDTO.builder().id(id).name(name).build();
-
 
     when(contactRepository.findById(id)).thenReturn(java.util.Optional.of(contact));
     when(contactMapper.toDto(contact)).thenReturn(contactDTO);
 
-
     // Act & Assert
     String path = "/api/v1/contact";
 
-    mvc.perform(get(path)
-                    .param("id", "1")
-                    .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name))
-    ;
+    mvc.perform(get(path).param("id", "1").accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name));
   }
 }

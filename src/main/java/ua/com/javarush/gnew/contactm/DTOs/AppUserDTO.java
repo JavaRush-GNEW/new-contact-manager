@@ -1,6 +1,5 @@
 package ua.com.javarush.gnew.contactm.DTOs;
 
-
 import lombok.*;
 
 @Getter

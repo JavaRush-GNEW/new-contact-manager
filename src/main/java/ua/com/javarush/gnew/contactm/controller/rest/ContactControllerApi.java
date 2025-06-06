@@ -1,6 +1,7 @@
 package ua.com.javarush.gnew.contactm.controller.rest;
 
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,17 +10,13 @@ import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/contact")
 public class ContactControllerApi {
 
   private final ContactRepository contactRepository;
   private final ContactMapper contactMapper;
-
-  public ContactControllerApi(ContactRepository contactRepository, ContactMapper contactMapper) {
-    this.contactRepository = contactRepository;
-    this.contactMapper = contactMapper;
-  }
 
   @GetMapping
   public ResponseEntity<ContactDTO> getContact(@RequestParam("id") Long id) {
