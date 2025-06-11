@@ -1,7 +1,7 @@
 package ua.com.javarush.gnew.contactm.DTOs;
 
-import lombok.*;
 import java.util.List;
+import lombok.*;
 import ua.com.javarush.gnew.contactm.entity.UserRole;
 
 @Getter
