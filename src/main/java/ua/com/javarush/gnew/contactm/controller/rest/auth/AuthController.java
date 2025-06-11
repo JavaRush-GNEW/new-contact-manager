@@ -53,6 +53,6 @@ public class AuthController {
       return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
     }
     appUserService.register(appUserDTO);
-    return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+    return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
   }
 }

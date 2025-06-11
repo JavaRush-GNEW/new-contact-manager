@@ -2,6 +2,7 @@ package ua.com.javarush.gnew.contactm.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -23,62 +24,51 @@ public class SecurityConfig {
   private final JWTGenerator tokenGenerator;
 
   public SecurityConfig(
-      JwtAuthEntryPoint authEntryPoint,
-      CustomUserDetailsService userDetailsService,
-      JWTGenerator tokenGenerator) {
+          JwtAuthEntryPoint authEntryPoint,
+          CustomUserDetailsService userDetailsService,
+          JWTGenerator tokenGenerator) {
     this.authEntryPoint = authEntryPoint;
     this.userDetailsService = userDetailsService;
     this.tokenGenerator = tokenGenerator;
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf(csrf -> csrf.disable())
-
-        //        .csrf(csrf -> csrf
-        //            .ignoringRequestMatchers("/api/**") // Вимикаємо CSRF для API
-        //        )
-        .sessionManagement(
-            session ->
-                session.sessionCreationPolicy(
-                    SessionCreationPolicy.STATELESS) // Без сесій, як годиться для JWT
-            )
-        .authorizeHttpRequests(
-            auth ->
-                auth.requestMatchers(
-                        "/main.css", "/img/**", "/register", "/login", "/", "/api/v1/auth/**")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
-        .exceptionHandling(
-            ex -> ex.authenticationEntryPoint(authEntryPoint) // кастомний EntryPoint
-            )
-        .addFilterBefore(
-            jwtAuthenticationFilter(tokenGenerator, userDetailsService),
-            UsernamePasswordAuthenticationFilter.class); // додаємо JWT фільтр
-
+  @Order(1)
+  public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
+    http.securityMatcher("/api/**")
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(
+                    session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(
+                    auth ->
+                            auth.requestMatchers("/api/v1/auth/**")
+                                    .permitAll()
+                                    .anyRequest()
+                                    .authenticated())
+            .exceptionHandling(ex -> ex.authenticationEntryPoint(authEntryPoint))
+            .addFilterBefore(
+                    jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
-  // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-  //    http.csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
-  //    .authorizeHttpRequests(
-  //            requests ->
-  //                requests
-  //                    .requestMatchers( "/main.css", "/img/**", "/register", "/login", "/api/**",
-  // "/")
-  //                    .permitAll()
-  //                    .requestMatchers("/").authenticated()
-  //                    .anyRequest()
-  //                    .authenticated())
-  //        .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/", true).permitAll())
-  //        .logout(logout -> logout.logoutUrl("/logout"));
-  //      return http.build();
-  //  }
+  @Bean
+  @Order(2)
+  public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(
+                    requests ->
+                            requests
+                                    .requestMatchers("/main.css", "/img/**", "/register", "/login", "/")
+                                    .permitAll()
+                                    .anyRequest()
+                                    .authenticated())
+            .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/", true).permitAll())
+            .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/"));
+    return http.build();
+  }
 
   @Bean
   public AuthenticationManager authenticationManager(
-      AuthenticationConfiguration authenticationConfiguration) throws Exception {
+          AuthenticationConfiguration authenticationConfiguration) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
 
@@ -88,8 +78,7 @@ public class SecurityConfig {
   }
 
   @Bean
-  public JWTAuthenticationFilter jwtAuthenticationFilter(
-      JWTGenerator tokenGenerator, CustomUserDetailsService userDetailsService) {
+  public JWTAuthenticationFilter jwtAuthenticationFilter() {
     return new JWTAuthenticationFilter(tokenGenerator, userDetailsService);
   }
 }

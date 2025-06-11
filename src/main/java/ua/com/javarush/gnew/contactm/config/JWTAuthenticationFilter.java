@@ -43,12 +43,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
       authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
       SecurityContextHolder.getContext().setAuthentication(authenticationToken);
       System.out.println("==> Користувач аутентифікований");
+    } else {
+        System.out.println("==> Токен відсутній або недійсний");
     }
-    System.out.println("==> Токен відсутній або недійсний");
     filterChain.doFilter(request, response);
   }
 
-  private String getJWTFromRequest(HttpServletRequest request) {
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return !request.getRequestURI().startsWith("/api/");
+    }
+
+    private String getJWTFromRequest(HttpServletRequest request) {
     String bearerToken = request.getHeader("Authorization");
     if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
       return bearerToken.substring(7, bearerToken.length());
