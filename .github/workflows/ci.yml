@@ -5,28 +5,34 @@ on:
     branches: [spring-boot]
   pull_request:
 
+env:
+  JAVA_VERSION: '17'
+
 jobs:
-  # Common setup steps to avoid repetition
   setup:
     runs-on: ubuntu-latest
     outputs:
-      cache-key: ${{ steps.cache-deps.outputs.key }}
+      cache_key: ${{ steps.generate_key.outputs.cache_key }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Java ${{ env.JAVA_VERSION }}
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
 
-      - name: Cache Maven deps
-        id: cache-deps
+      - name: Generate cache key
+        id: generate_key
+        # use GITHUB_OUTPUT to set a step output named "cache_key"
+        run: echo "cache_key=${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}" >> $GITHUB_OUTPUT
+
+      - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ steps.generate_key.outputs.cache_key }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
@@ -35,8 +41,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Verify code formatting
     steps:
-      - name: Reuse checkout & Java from setup
+      - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Format check
         run: mvn com.spotify.fmt:fmt-maven-plugin:2.25:check
@@ -50,14 +62,22 @@ jobs:
       checks: write
       pull-requests: write
     steps:
-      - name: Reuse checkout & Java from setup
+      - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Set up JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Restore Maven cache
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository
-          key: ${{ needs.setup.outputs.cache-key }}
+          key: ${{ needs.setup.outputs.cache_key }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: Run tests
         run: mvn --batch-mode --update-snapshots test
@@ -66,15 +86,15 @@ jobs:
         run: mvn jacoco:report
 
       - name: Publish unit test results
-        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: target/surefire-reports/*.xml
           report_individual_runs: true
 
       - name: JUnit Test Report
-        uses: mikepenz/action-junit-report@v3
         if: always()
+        uses: mikepenz/action-junit-report@v3
         with:
           report_paths: target/surefire-reports/*.xml
           check_name: JUnit Test Report
@@ -84,6 +104,3 @@ jobs:
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: target/site/jacoco/jacoco.xml
-
-env:
-  JAVA_VERSION: '17'
