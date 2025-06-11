@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # Common setup steps to avoid repetition
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      cache-key: ${{ steps.cache-deps.outputs.key }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Cache Maven deps
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+  fmt-check:
+    needs: setup
+    runs-on: ubuntu-latest
+    name: Verify code formatting
+    steps:
+      - name: Reuse checkout & Java from setup
+        uses: actions/checkout@v3
+
+      - name: Format check
+        run: mvn com.spotify.fmt:fmt-maven-plugin:2.25:check
+
+  test:
+    needs: [setup, fmt-check]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Reuse checkout & Java from setup
+        uses: actions/checkout@v3
+
+      - name: Restore Maven cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ needs.setup.outputs.cache-key }}
+
+      - name: Run tests
+        run: mvn --batch-mode --update-snapshots test
+
+      - name: Generate JaCoCo report
+        run: mvn jacoco:report
+
+      - name: Publish unit test results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: target/surefire-reports/*.xml
+          report_individual_runs: true
+
+      - name: JUnit Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: always()
+        with:
+          report_paths: target/surefire-reports/*.xml
+          check_name: JUnit Test Report
+
+      - name: Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: target/site/jacoco/jacoco.xml
+
+env:
+  JAVA_VERSION: '17'
