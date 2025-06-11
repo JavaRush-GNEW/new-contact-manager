@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,6 +55,11 @@ public class AppUser {
   @Column(name = "modify_date")
   private Date modifyDate;
 
+  @ElementCollection(fetch = FetchType.EAGER)
+  @Enumerated(EnumType.STRING) 
+  private Set<UserRole> userRole;
+
+  
   @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Expose
   private List<ContactBook> contactBooks;

@@ -10,7 +10,8 @@
 <body>
 
 <div th:replace="~{components/header-component}"></div>
-
+<div th:if="${param.success}">You are registered successfully!</div>
+<div th:if="${param.continue}">You have been logged in successfuly</div>
 <div class="">
     <!-- Display the project name -->
     <div th:text="${tableName}"></div>
