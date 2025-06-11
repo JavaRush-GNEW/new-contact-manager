@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @GetMapping(value = "/api/test", produces = "application/json")
-    public String securedHello() {
-        return "Доступ дозволено! JWT працює правильно.";
-    }
+  @GetMapping(value = "/api/test", produces = "application/json")
+  public String securedHello() {
+    return "Доступ дозволено! JWT працює правильно.";
+  }
 }
-

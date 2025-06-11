@@ -24,5 +24,4 @@ public interface AppUserMapper {
       appUser.getContactBooks().forEach(contactBook -> contactBook.setOwner(appUser));
     }
   }
-
 }

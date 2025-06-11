@@ -25,15 +25,15 @@ public class ContactControllerApi {
   @PreAuthorize("hasRole('USER')")
   @GetMapping("/user")
   public String userEndpoint() {
-	  return "Hello, User";
+    return "Hello, User";
   }
-  
+
   @PreAuthorize("hasRole('ADMIN')")
   @GetMapping("/admin")
   public String adminEndpoint() {
-	  return "Hello, Admin";
+    return "Hello, Admin";
   }
-  
+
   @GetMapping
   public ResponseEntity<ContactDTO> getContact(@RequestParam("id") Long id) {
     return contactRepository
