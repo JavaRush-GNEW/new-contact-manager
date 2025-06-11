@@ -49,8 +49,8 @@ jobs:
           report_paths: 'target/surefire-reports/*.xml'
           check_name: JUnit Test Report
 
-#      - name: Codacy Coverage Reporter
-#        uses: codacy/codacy-coverage-reporter-action@v1.3.0
-#        with:
-#          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-#          coverage-reports: target/site/jacoco/jacoco.xml
+      - name: Codacy Coverage Reporter
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: target/site/jacoco/jacoco.xml
