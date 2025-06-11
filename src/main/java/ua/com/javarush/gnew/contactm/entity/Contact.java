@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,6 +14,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "contact")
 public class Contact {
@@ -37,9 +37,9 @@ public class Contact {
   @Expose
   private List<Email> emails = new ArrayList<>();
 
-  @Column(name = "last_name")
-  @Expose
-  private String lastName;
+    @Column(name = "last_name")
+    @Expose
+    private String lastName;
 
   @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Expose
