@@ -21,7 +21,6 @@ import ua.com.javarush.gnew.contactm.services.AppUserService;
 public class AuthController {
   private final AuthenticationManager authenticationManager;
   private final AppUserService appUserService;
-  private final AppUserMapper appUserMapper;
   private final JWTGenerator jwtGenerator;
 
   public AuthController(
@@ -31,7 +30,6 @@ public class AuthController {
       JWTGenerator jwtGenerator) {
     this.authenticationManager = authenticationManager;
     this.appUserService = appUserService;
-    this.appUserMapper = appUserMapper;
     this.jwtGenerator = jwtGenerator;
   }
 
