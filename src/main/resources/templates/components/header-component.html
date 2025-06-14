@@ -1,4 +1,4 @@
-<header class="bg-white">
+<header class="bg-white" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex-1 md:flex md:items-center md:gap-12">
@@ -31,10 +31,11 @@
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <div class="sm:flex sm:gap-4">
+
+                    <div class="sm:flex sm:gap-4" sec:authorize="!isAuthenticated()">
                         <a
                                 class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm"
-                                href="login"
+                                th:href="@{/login}"
                         >
                             Login
                         </a>
@@ -42,12 +43,25 @@
                         <div class="hidden sm:flex">
                             <a
                                     class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
-                                    href="register"
+                                    th:href="@{/register}"
                             >
                                 Register
                             </a>
                         </div>
                     </div>
+
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button
+                                    type="submit"
+                                    class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
+                            >
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
 
                     <div class="block md:hidden">
                         <button
