@@ -25,8 +25,8 @@ public class Phone {
   @Expose
   private String phone;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "contact_id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = true)
+  @JoinColumn(name = "contact_id", nullable = true)
   private Contact contact;
 
   @Override
