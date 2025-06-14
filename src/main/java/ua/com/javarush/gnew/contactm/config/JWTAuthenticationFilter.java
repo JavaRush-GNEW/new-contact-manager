@@ -5,7 +5,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -13,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ua.com.javarush.gnew.contactm.services.CustomUserDetailsService;
 
+@Slf4j
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
   private final JWTGenerator tokenGenerator;
@@ -31,20 +34,23 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     String token = getJWTFromRequest(request);
-    System.out.println("==> JWT фільтр спрацював");
-    System.out.println("Authorization header: " + request.getHeader("Authorization"));
-    System.out.println("Token parsed: " + token);
+    log.debug("==> JWT фільтр спрацював");
+    log.debug("Authorization header: {}", request.getHeader("Authorization"));
+    log.debug("Token parsed: {}", token);
     if (StringUtils.hasText(token) && tokenGenerator.validateToken(token)) {
       String username = tokenGenerator.getUsernameFromJWT(token);
-      System.out.println("Token valid, username: " + username);
+      log.debug("Token valid, username: {}", username);
       UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
       UsernamePasswordAuthenticationToken authenticationToken =
           new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
       authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-      SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-      System.out.println("==> Користувач аутентифікований");
+      SecurityContext context = SecurityContextHolder.createEmptyContext();
+      context.setAuthentication(authenticationToken);
+      SecurityContextHolder.setContext(context);
+
+      log.debug("==> Користувач аутентифікований");
     } else {
-      System.out.println("==> Токен відсутній або недійсний");
+      log.debug("==> Токен відсутній або недійсний");
     }
     filterChain.doFilter(request, response);
   }

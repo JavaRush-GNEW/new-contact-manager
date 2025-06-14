@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ua.com.javarush.gnew.contactm.services.CustomUserDetailsService;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableMethodSecurity
 public class SecurityConfig {
   private final JwtAuthEntryPoint authEntryPoint;

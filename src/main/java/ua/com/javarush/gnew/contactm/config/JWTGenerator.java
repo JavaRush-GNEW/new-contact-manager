@@ -6,16 +6,26 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class JWTGenerator {
+
+  @Value("${jwt.secret}")
+  private String jwtSecret;
+
+  @Value("${jwt.expiration}")
+  private int jwtExpiration;
+
   public String generateToken(Authentication authentication) {
     String userName = authentication.getName();
     Date currentDate = new Date();
-    Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
+    Date expireDate = new Date(currentDate.getTime() + jwtExpiration);
 
     String token =
         Jwts.builder()
@@ -24,11 +34,12 @@ public class JWTGenerator {
             .setExpiration(expireDate)
             .signWith(getSigningKey(), SignatureAlgorithm.HS512)
             .compact();
+
     return token;
   }
 
-  public static Key getSigningKey() {
-    return Keys.hmacShaKeyFor(SecurityConstants.JWT_SECRET.getBytes());
+  public Key getSigningKey() {
+    return Keys.hmacShaKeyFor(jwtSecret.getBytes());
   }
 
   public String getUsernameFromJWT(String token) {
