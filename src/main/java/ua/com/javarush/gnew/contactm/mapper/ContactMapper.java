@@ -23,10 +23,9 @@ public interface ContactMapper {
 
   @AfterMapping
   default void setParentReferences(@MappingTarget Contact contact) {
-    if (contact.getEmails() == null)
-      if (contact.getEmails() != null) {
-        contact.getEmails().forEach(email -> email.setContact(contact));
-      }
+    if (contact.getEmails() != null) {
+      contact.getEmails().forEach(email -> email.setContact(contact));
+    }
     if (contact.getPhones() != null) {
       contact.getPhones().forEach(phone -> phone.setContact(contact));
     }
