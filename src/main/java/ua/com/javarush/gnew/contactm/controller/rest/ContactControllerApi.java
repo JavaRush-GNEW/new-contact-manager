@@ -2,6 +2,7 @@ package ua.com.javarush.gnew.contactm.controller.rest;
 
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,11 +12,11 @@ import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/contact")
 public class ContactControllerApi {
-
   private final ContactRepository contactRepository;
   private final ContactMapper contactMapper;
 
@@ -33,6 +34,7 @@ public class ContactControllerApi {
 
   @GetMapping
   public ResponseEntity<ContactDTO> getContact(@RequestParam("id") Long id) {
+    log.debug("getContact: id={}", id);
     return contactRepository
         .findById(id)
         .map(contact -> new ResponseEntity<>(contactMapper.toDto(contact), HttpStatus.OK))
