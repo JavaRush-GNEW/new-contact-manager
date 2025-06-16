@@ -6,14 +6,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller()
+@Controller
 public class LoginController {
+
+  //  @GetMapping("/login")
+  //  public String getLoginPage() {
+  //    return "login";
+  //  }
 
   @GetMapping("/login")
   public String getLoginPage() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
-      return "redirect:/";
+      return "redirect:/?continue";
     }
     return "login";
   }

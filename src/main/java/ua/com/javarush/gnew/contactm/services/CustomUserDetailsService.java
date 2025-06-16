@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ua.com.javarush.gnew.contactm.entity.AppUser;
-import ua.com.javarush.gnew.contactm.entity.UserRole;
 import ua.com.javarush.gnew.contactm.repository.AppUserRepository;
 
 @Service
@@ -16,6 +15,7 @@ public class CustomUserDetailsService
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    System.out.println("==> Завантажую користувача: " + username);
     AppUser appUser = appUserRepository.findByUsername(username);
     if (appUser == null) {
       throw new UsernameNotFoundException(username + " not found");
@@ -24,7 +24,7 @@ public class CustomUserDetailsService
     return User.builder()
         .username(appUser.getUsername())
         .password(appUser.getPassword())
-        .roles(UserRole.ADMIN.name()) // @TODO Implement role in the DB
+        .roles(appUser.getUserRole().stream().map(Enum::name).toArray(String[]::new))
         .build();
   }
 }

@@ -1,6 +1,8 @@
 package ua.com.javarush.gnew.contactm.DTOs;
 
+import java.util.List;
 import lombok.*;
+import ua.com.javarush.gnew.contactm.entity.UserRole;
 
 @Getter
 @Setter
@@ -14,4 +16,5 @@ public class AppUserDTO {
   private String username;
   private String password;
   private String email;
+  private List<UserRole> userRole;
 }
