@@ -13,7 +13,9 @@
                 <th class="px-3 py-2 whitespace-nowrap">Email</th>
                 <th class="px-3 py-2 whitespace-nowrap">Phone</th>
                 <th class="px-3 py-2 whitespace-nowrap">Social network</th>
+				<div class="sm:flex sm:gap-4" sec:authorize="isAuthenticated()">
                 <th class="px-3 py-2 whitespace-nowrap">Action</th>
+				</div>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -43,10 +45,12 @@
                 </td>
 
                 <td>
+					<div class="sm:flex sm:gap-4" sec:authorize="isAuthenticated()">
                     <button> <a th:href="@{|/contact/edit/${contact.id}}">Edit</a> </button>
                     <form th:action="@{|/contact/remove/${contact.id}}" method="post">
                         <button type="submit"> Remove </button>
                     </form>
+					</div>
                 </td>
             </tr>
             </tbody>

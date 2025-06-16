@@ -41,7 +41,7 @@ public class Contact {
   @Expose
   private String lastName;
 
-  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @Expose
   private List<Phone> phones = new ArrayList<>();
 

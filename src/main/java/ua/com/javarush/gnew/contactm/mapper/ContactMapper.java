@@ -1,6 +1,7 @@
 package ua.com.javarush.gnew.contactm.mapper;
 
 import org.mapstruct.AfterMapping;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -8,6 +9,7 @@ import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 
 @Mapper(
+    builder = @Builder(disableBuilder = true),
     componentModel = "spring",
     uses = {EmailMapper.class, PhoneMapper.class, SocialNetworkMapper.class})
 public interface ContactMapper {

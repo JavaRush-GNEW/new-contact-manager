@@ -24,8 +24,8 @@ public class Email {
   @Expose
   private String email;
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "contact_id", nullable = false)
+  @ManyToOne(fetch = FetchType.EAGER, optional = true)
+  @JoinColumn(name = "contact_id", nullable = true)
   private Contact contact;
 
   @Override
