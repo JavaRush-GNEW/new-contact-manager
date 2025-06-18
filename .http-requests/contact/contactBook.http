@@ -1,10 +1,12 @@
 ### Get a contact book by id
 GET {{host}}/{{api.path}}/{{api.version}}/contact-book?id=1
+Authorization: Bearer {{auth_token}}
 
 
 ### Create a contact book
 POST {{host}}/{{api.path}}/{{api.version}}/contact-book
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "name": "My contacts",
@@ -13,25 +15,39 @@ Content-Type: application/json
       "name": "Alice",
       "lastName": "Smith",
       "emails": [
-        {"email": "alice@example.com"}
+        {
+          "email": "alice@example.com"
+        }
       ],
       "phones": [
-        {"phone": "+380501112233"}
+        {
+          "phone": "+380501112233"
+        }
       ],
       "networks": [
-        {"label": "telegram", "account": "@alice_ua"}
+        {
+          "label": "telegram",
+          "account": "@alice_ua"
+        }
       ]
     },
     {
       "name": "Bob Johnson",
       "emails": [
-        {"email": "bob@example.com"}
+        {
+          "email": "bob@example.com"
+        }
       ],
       "phones": [
-        {"phone": "+380671234567"}
+        {
+          "phone": "+380671234567"
+        }
       ],
       "networks": [
-        {"label": "facebook", "account": "bob.j"}
+        {
+          "label": "facebook",
+          "account": "bob.j"
+        }
       ]
     }
   ]
@@ -48,13 +64,20 @@ Content-Type: application/json
       "name": "Charlie",
       "lastName": "Updated",
       "emails": [
-        {"email": "charlie@example.com"}
+        {
+          "email": "charlie@example.com"
+        }
       ],
       "phones": [
-        {"phone": "+12312312312"}
+        {
+          "phone": "+12312312312"
+        }
       ],
       "networks": [
-        {"label": "twitter", "account": "charlie_tw"}
+        {
+          "label": "twitter",
+          "account": "charlie_tw"
+        }
       ]
     }
   ]
@@ -62,3 +85,4 @@ Content-Type: application/json
 
 ### Delete a contact book
 DELETE {{host}}/{{api.path}}/{{api.version}}/contact-book?id=1
+Authorization: Bearer {{api.token}}
