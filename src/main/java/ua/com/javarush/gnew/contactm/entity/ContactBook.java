@@ -23,6 +23,10 @@ public class ContactBook {
   @Expose
   private long id;
 
+  @Column(name = "name")
+  @Expose
+  private String name;
+
   @ManyToOne
   @JoinColumn(name = "app_user_id")
   private AppUser owner;

@@ -10,5 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ContactBookDTO {
   private long id;
+  private String name;
   private List<ContactDTO> contacts;
 }
