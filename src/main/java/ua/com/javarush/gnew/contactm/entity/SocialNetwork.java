@@ -23,7 +23,7 @@ public class SocialNetwork {
   private String account;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "contact_id", nullable = false)
+  @JoinColumn(name = "contact_id", nullable = true)
   private Contact contact;
 
   @Override
