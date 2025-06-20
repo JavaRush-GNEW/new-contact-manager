@@ -44,6 +44,17 @@ public class AppUser {
   @Expose
   private String email;
 
+  @Expose
+  private String imageUrl;
+
+  @ElementCollection(fetch = FetchType.EAGER)
+  @Enumerated(EnumType.STRING)
+  private Set<UserRole> userRole;
+
+  @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @Expose
+  private List<ContactBook> contactBooks;
+
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "create_date")
@@ -53,14 +64,6 @@ public class AppUser {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "modify_date")
   private Date modifyDate;
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  @Enumerated(EnumType.STRING)
-  private Set<UserRole> userRole;
-
-  @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @Expose
-  private List<ContactBook> contactBooks;
 
   @Override
   public boolean equals(Object o) {
