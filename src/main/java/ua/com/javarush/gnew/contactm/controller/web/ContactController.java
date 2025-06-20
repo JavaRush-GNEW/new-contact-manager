@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.contactm.controller.web;
 
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +11,6 @@ import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.services.CloudinaryService;
 import ua.com.javarush.gnew.contactm.services.ContactService;
-
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/contact")
@@ -30,7 +29,10 @@ public class ContactController {
   }
 
   @PostMapping("/edit")
-  public String editContact(@ModelAttribute ContactDTO contactDTO, @RequestParam(value = "imageFile", required = false) MultipartFile imageFile, RedirectAttributes redirectAttributes) {
+  public String editContact(
+      @ModelAttribute ContactDTO contactDTO,
+      @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+      RedirectAttributes redirectAttributes) {
 
     try {
       // Handle image upload if provided
@@ -51,7 +53,6 @@ public class ContactController {
 
     return "redirect:/";
   }
-
 
   @PostMapping("/remove/{id}")
   public String remove(@PathVariable Long id) {

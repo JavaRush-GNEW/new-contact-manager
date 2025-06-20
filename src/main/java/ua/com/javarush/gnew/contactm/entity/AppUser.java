@@ -44,8 +44,7 @@ public class AppUser {
   @Expose
   private String email;
 
-  @Expose
-  private String imageUrl;
+  @Expose private String imageUrl;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @Enumerated(EnumType.STRING)

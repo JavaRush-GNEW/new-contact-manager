@@ -20,8 +20,8 @@ public class ImageController {
       String imageUrl = imageService.upload(file, null);
       return ResponseEntity.status(HttpStatus.CREATED).body(imageUrl);
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Image upload failed: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("Image upload failed: " + e.getMessage());
     }
   }
-
 }

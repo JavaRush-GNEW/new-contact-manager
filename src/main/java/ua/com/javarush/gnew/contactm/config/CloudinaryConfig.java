@@ -1,11 +1,10 @@
 package ua.com.javarush.gnew.contactm.config;
 
 import com.cloudinary.Cloudinary;
+import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
 
 @Configuration
 public class CloudinaryConfig {
@@ -28,5 +27,4 @@ public class CloudinaryConfig {
 
     return new Cloudinary(config);
   }
-
 }

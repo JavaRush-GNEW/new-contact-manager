@@ -49,8 +49,7 @@ public class Contact {
   @Expose
   private List<SocialNetwork> networks = new ArrayList<>();
 
-  @Expose
-  private String imageUrl;
+  @Expose private String imageUrl;
 
   @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
