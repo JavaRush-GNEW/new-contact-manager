@@ -9,12 +9,13 @@ import ua.com.javarush.gnew.contactm.entity.UserRole;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class AppUserDTO {
   private long id;
   private String firstName;
   private String lastName;
   private String username;
-  private String password;
+  @ToString.Exclude private String password;
   private String email;
   private List<UserRole> userRole;
 }
