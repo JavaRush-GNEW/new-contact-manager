@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.contactm.controller.web;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ua.com.javarush.gnew.contactm.entity.AppUser;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.services.ContactService;
-
-import java.util.List;
-
 
 @Controller
 @RequestMapping("/dashboard")
@@ -32,7 +30,6 @@ public class DashboardController {
     return "dashboard/dashboard";
   }
 
-
   @GetMapping(value = "/contact/list")
   public String contactList(Model model) {
     AppUser appUser = new AppUser();
@@ -48,5 +45,4 @@ public class DashboardController {
 
     return "dashboard/contact-list";
   }
-
 }

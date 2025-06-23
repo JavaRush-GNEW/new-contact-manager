@@ -1,13 +1,12 @@
 package ua.com.javarush.gnew.contactm.services;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
