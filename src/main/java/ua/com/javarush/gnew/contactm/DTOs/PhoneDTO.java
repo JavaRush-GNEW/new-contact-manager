@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PhoneDTO {
-    private long id;
-    private String label;
-    private String phone;
+  private long id;
+  private String label;
+  private String phone;
 }

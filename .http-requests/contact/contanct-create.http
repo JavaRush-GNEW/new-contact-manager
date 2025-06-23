@@ -1,10 +1,12 @@
 ### Get a contact by id
-GET {{host}}/{{api.path}}/{{api.version}}/contact?id=1
+GET {{host}}/{{api.path}}/{{api.version}}/contact?id=5
+Authorization: Bearer {{auth_token}}
 
 
 ### Create a contact
 POST {{host}}/{{api.path}}/{{api.version}}/contact
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "name": "John",
@@ -25,6 +27,7 @@ Content-Type: application/json
 ### Update a contact
 PUT {{host}}/{{api.path}}/{{api.version}}/contact?id=2
 Content-Type: application/json
+Authorization: Bearer {{auth_token}}
 
 {
   "name": "John",
@@ -42,3 +45,4 @@ Content-Type: application/json
 
 ### Delete a contact
 DELETE {{host}}/{{api.path}}/{{api.version}}/contact?id=2
+Authorization: Bearer {{auth_token}}

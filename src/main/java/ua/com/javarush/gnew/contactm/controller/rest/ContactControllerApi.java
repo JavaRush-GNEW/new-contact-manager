@@ -1,32 +1,44 @@
 package ua.com.javarush.gnew.contactm.controller.rest;
 
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.repository.ContactRepository;
 
-import java.util.Optional;
-
+@Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/contact")
 public class ContactControllerApi {
-
   private final ContactRepository contactRepository;
   private final ContactMapper contactMapper;
 
-  public ContactControllerApi(ContactRepository contactRepository, ContactMapper contactMapper) {
-    this.contactRepository = contactRepository;
-    this.contactMapper = contactMapper;
+  @PreAuthorize("hasRole('USER')")
+  @GetMapping("/user")
+  public String userEndpoint() {
+    return "Hello, User";
+  }
+
+  @PreAuthorize("hasRole('ADMIN')")
+  @GetMapping("/admin")
+  public String adminEndpoint() {
+    return "Hello, Admin";
   }
 
   @GetMapping
   public ResponseEntity<ContactDTO> getContact(@RequestParam("id") Long id) {
-    return contactRepository.findById(id)
-            .map(contact -> new ResponseEntity<>(contactMapper.toDto(contact), HttpStatus.OK))
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    log.debug("getContact: id={}", id);
+    return contactRepository
+        .findById(id)
+        .map(contact -> new ResponseEntity<>(contactMapper.toDto(contact), HttpStatus.OK))
+        .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @PostMapping
@@ -37,7 +49,8 @@ public class ContactControllerApi {
   }
 
   @PutMapping
-  public ResponseEntity<ContactDTO> update(@RequestParam("id") Long id, @RequestBody ContactDTO contactDTO) {
+  public ResponseEntity<ContactDTO> update(
+      @RequestParam("id") Long id, @RequestBody ContactDTO contactDTO) {
     Optional<Contact> existingOpt = contactRepository.findById(id);
     if (existingOpt.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -14,8 +14,24 @@
 <div class="bg-gray-100 min-h-screen py-8">
     <div class="container mx-auto max-w-2xl bg-white rounded-lg shadow p-6">
         <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Edit Contact</h1>
-        <form th:action="@{/contact/edit}" th:object="${contact}" method="post" class="space-y-6">
+        <form th:action="@{/contact/edit}" th:object="${contact}" method="post" enctype="multipart/form-data" class="space-y-6">
             <input type="hidden" th:field="*{id}" />
+
+            <!-- Current Image Display -->
+            <div class="text-center mb-4" th:if="${contact.imageUrl}">
+                <img th:src="${contact.imageUrl}" 
+                     alt="Current contact image" 
+                     class="w-24 h-24 rounded-full object-cover border-4 border-gray-200 shadow-md mx-auto">
+                <p class="text-sm text-gray-500 mt-2">Current Image</p>
+            </div>
+
+            <!-- Image Upload -->
+            <div>
+                <label for="imageFile" class="block text-sm font-medium text-gray-700">Profile Image</label>
+                <input id="imageFile" type="file" name="imageFile" accept="image/*"
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
+                <p class="text-xs text-gray-500 mt-1">Upload a new image (optional)</p>
+            </div>
 
             <!-- Name -->
             <div>
@@ -23,6 +39,12 @@
                 <input id="name" type="text" th:field="*{name}" required
                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
             </div>
+			
+			<div>
+			    <label for="lastname" class="block text-sm font-medium text-gray-700">Lastname</label>
+			    <input id="lastname" type="text" th:field="*{lastName}" required
+			           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
+			</div>
 
             <!-- Emails -->
             <div>
@@ -78,7 +100,7 @@
             <!-- Submit -->
             <div class="text-right">
                 <button type="submit"
-                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-indigo-200">
+                        class="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm">
                     Save Changes
                 </button>
             </div>

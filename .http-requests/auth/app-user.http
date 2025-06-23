@@ -1,0 +1,22 @@
+### Create AppUser
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstName": "asd",
+  "lastName": "asd",
+  "username": "test12",
+  "password": "test12",
+  "email": "test@example.com"
+}
+
+### Login
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+> {% client.global.set("auth_token", response.body.accessToken); %}

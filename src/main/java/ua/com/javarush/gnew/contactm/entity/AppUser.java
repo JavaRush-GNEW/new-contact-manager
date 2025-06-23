@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,54 +19,77 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "app_user")
 public class AppUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Expose
+  private long id;
 
-    @Column(name = "first_name")
-    @Expose
-    private String firstName;
+  @Column(name = "first_name")
+  @Expose
+  private String firstName;
 
-    @Column(name = "last_name")
-    @Expose
-    private String lastName;
+  @Column(name = "last_name")
+  @Expose
+  private String lastName;
 
-    @Column(name = "username")
-    @Expose
-    private String username;
+  @Column(name = "username")
+  @Expose
+  private String username;
 
-    @Column(name = "password")
-    @Expose
-    private String password;
+  @Column(name = "password")
+  @Expose
+  private String password;
 
-    @Column(name = "email")
-    @Expose
-    private String email;
+  @Column(name = "email")
+  @Expose
+  private String email;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
+  @Expose private String imageUrl;
 
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modify_date")
-    private Date modifyDate;
+  @ElementCollection(fetch = FetchType.EAGER)
+  @Enumerated(EnumType.STRING)
+  private Set<UserRole> userRole;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Expose
-    private List<ContactBook> contactBooks;
+  @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @Expose
+  private List<ContactBook> contactBooks;
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        AppUser appUser = (AppUser) o;
-        return getId() == appUser.getId() && Objects.equals(getFirstName(), appUser.getFirstName()) && Objects.equals(getLastName(), appUser.getLastName()) && Objects.equals(getUsername(), appUser.getUsername()) && Objects.equals(getPassword(), appUser.getPassword()) && Objects.equals(getEmail(), appUser.getEmail()) && Objects.equals(getCreateDate(), appUser.getCreateDate()) && Objects.equals(getModifyDate(), appUser.getModifyDate()) && Objects.equals(getContactBooks(), appUser.getContactBooks());
-    }
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "create_date")
+  private Date createDate;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getUsername(), getPassword(), getEmail(), getCreateDate(), getModifyDate(), getContactBooks());
-    }
+  @UpdateTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "modify_date")
+  private Date modifyDate;
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    AppUser appUser = (AppUser) o;
+    return getId() == appUser.getId()
+        && Objects.equals(getFirstName(), appUser.getFirstName())
+        && Objects.equals(getLastName(), appUser.getLastName())
+        && Objects.equals(getUsername(), appUser.getUsername())
+        && Objects.equals(getPassword(), appUser.getPassword())
+        && Objects.equals(getEmail(), appUser.getEmail())
+        && Objects.equals(getCreateDate(), appUser.getCreateDate())
+        && Objects.equals(getModifyDate(), appUser.getModifyDate())
+        && Objects.equals(getContactBooks(), appUser.getContactBooks());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(
+        getId(),
+        getFirstName(),
+        getLastName(),
+        getUsername(),
+        getPassword(),
+        getEmail(),
+        getCreateDate(),
+        getModifyDate(),
+        getContactBooks());
+  }
 }

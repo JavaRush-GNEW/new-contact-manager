@@ -1,6 +1,5 @@
 package ua.com.javarush.gnew.contactm.entity;
 
-
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import java.util.Date;
@@ -19,38 +18,46 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "contact_book")
 public class ContactBook {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
-    private long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Expose
+  private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "app_user_id")
-    private AppUser owner;
+  @Column(name = "name")
+  @Expose
+  private String name;
 
-    @OneToMany(mappedBy = "contactBook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Expose
-    private List<Contact> contacts;
+  @ManyToOne
+  @JoinColumn(name = "app_user_id")
+  private AppUser owner;
 
-    @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
+  @OneToMany(mappedBy = "contactBook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @Expose
+  private List<Contact> contacts;
 
-    @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "modify_date")
-    private Date modifyDate;
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "create_date")
+  private Date createDate;
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactBook that = (ContactBook) o;
-        return getId() == that.getId() && Objects.equals(getOwner(), that.getOwner()) && Objects.equals(getContacts(), that.getContacts()) && Objects.equals(getCreateDate(), that.getCreateDate()) && Objects.equals(getModifyDate(), that.getModifyDate());
-    }
+  @UpdateTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "modify_date")
+  private Date modifyDate;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getOwner(), getContacts(), getCreateDate(), getModifyDate());
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) return false;
+    ContactBook that = (ContactBook) o;
+    return getId() == that.getId()
+        && Objects.equals(getOwner(), that.getOwner())
+        && Objects.equals(getContacts(), that.getContacts())
+        && Objects.equals(getCreateDate(), that.getCreateDate())
+        && Objects.equals(getModifyDate(), that.getModifyDate());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(getId(), getOwner(), getContacts(), getCreateDate(), getModifyDate());
+  }
 }

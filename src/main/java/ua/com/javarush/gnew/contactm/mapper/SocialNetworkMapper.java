@@ -8,13 +8,13 @@ import ua.com.javarush.gnew.contactm.entity.SocialNetwork;
 @Mapper(componentModel = "spring")
 public interface SocialNetworkMapper {
 
-    SocialNetworkDTO toDto(SocialNetwork network);
+  SocialNetworkDTO toDto(SocialNetwork network);
 
-    @Mapping(target = "contact", ignore = true)
-    SocialNetwork toEntity(SocialNetworkDTO dto);
+  @Mapping(target = "contact", ignore = true)
+  SocialNetwork toEntity(SocialNetworkDTO dto);
 
-    @AfterMapping
-    default void setContact(@MappingTarget SocialNetwork network, @Context Contact contact) {
-        network.setContact(contact);
-    }
+  @AfterMapping
+  default void setContact(@MappingTarget SocialNetwork network, @Context Contact contact) {
+    network.setContact(contact);
+  }
 }
