@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.contactm.controller.rest;
 
+import jakarta.validation.Valid;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class ContactBookControllerApi {
   }
 
   @PostMapping
-  public ResponseEntity<ContactBookDTO> save(@RequestBody ContactBookDTO contactBookDTO) {
+  public ResponseEntity<ContactBookDTO> save(@Valid @RequestBody ContactBookDTO contactBookDTO) {
     ContactBook book = contactBookMapper.toEntity(contactBookDTO);
     ContactBook saved = contactBookRepository.save(book);
     return new ResponseEntity<>(contactBookMapper.toDto(saved), HttpStatus.CREATED);
