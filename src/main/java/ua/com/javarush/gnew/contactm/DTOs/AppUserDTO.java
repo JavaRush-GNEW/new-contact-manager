@@ -16,5 +16,6 @@ public class AppUserDTO {
   private String username;
   private String password;
   private String email;
+  private String imageUrl;
   private List<UserRole> userRole;
 }
