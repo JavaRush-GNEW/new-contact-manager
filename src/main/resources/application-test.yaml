@@ -1,0 +1,27 @@
+# This profile is used to run tests
+
+jwt:
+  secret: T9MBTpP38oYV2r6BgMvSE09MsFCGiJ5bEagLAWmMmsCusw5euyck4qmyIcn5XgP6
+  expiration: 3600000
+server:
+  error:
+    whitelabel:
+      enabled: false # disable the Whitelabel page
+    include-message: always # always include the HTTP message
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    root: info
+  file:
+    name: logs/app.log
+
+# Mock config
+cloudinary:
+  name: test-cloud-name
+  api-key: test-api-key
+  api-secret: test-api-secret

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <!-- Define a fragment named 'contactTable' that accepts a 'contacts' parameter -->
 <div th:fragment="contactTable(contacts)">
@@ -8,49 +9,68 @@
             <thead class="ltr:text-left rtl:text-right">
             <tr class="font-medium text-gray-900">
                 <th class="px-3 py-2 whitespace-nowrap">ID</th>
+                <th class="px-3 py-2 whitespace-nowrap">Image</th>
                 <th class="px-3 py-2 whitespace-nowrap">Name</th>
                 <th class="px-3 py-2 whitespace-nowrap">Last Name</th>
                 <th class="px-3 py-2 whitespace-nowrap">Email</th>
                 <th class="px-3 py-2 whitespace-nowrap">Phone</th>
                 <th class="px-3 py-2 whitespace-nowrap">Social network</th>
-				<div class="sm:flex sm:gap-4" sec:authorize="isAuthenticated()">
-                <th class="px-3 py-2 whitespace-nowrap">Action</th>
-				</div>
+                <th class="px-3 py-2 whitespace-nowrap" sec:authorize="isAuthenticated()">Action</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
             <tr th:each="contact : ${contacts}" class="text-gray-900">
                 <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.id}">ID</td>
+                <td class="px-3 py-2 whitespace-nowrap">
+                    <div class="flex justify-center">
+                        <img th:src="${contact.imageUrl}"
+                             style="height: 64px; width: 64px; object-fit: cover;"
+                             alt="profile image"
+                             class="w-12 h-12 rounded-full object-cover border-2 border-gray-200 shadow-sm"
+                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMjAiIGZpbGw9IiNGM0Y0RjYiLz4KPHN2ZyB4PSIxMiIgeT0iMTAiIHdpZHRoPSIxNiIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDE2IDIwIiBmaWxsPSJub25lIj4KPHBhdGggZD0iTTggMTBDMTAuMjA5MSAxMCAxMiA4LjIwOTE0IDEyIDZDMTIgMy43OTA4NiAxMC4yMDkxIDIgOCAyQzUuNzkwODYgMiA0IDMuNzkwODYgNCA2QzQgOC4yMDkxNCA1Ljc5MDg2IDEwIDggMTBaIiBmaWxsPSIjOUI5QkEzIi8+CjxwYXRoIGQ9Ik0yIDE4QzIgMTQuNjg2MyA0LjY4NjI5IDEyIDggMTJDMTEuMzEzNyAxMiAxNiAxNC42ODYzIDE2IDE4VjIwSDJWMThaIiBmaWxsPSIjOUI5QkEzIi8+Cjwvc3ZnPgo8L3N2Zz4K'">
+                    </div>
+                </td>
                 <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.name}">Name</td>
                 <td class="px-3 py-2 whitespace-nowrap" th:text="${contact.lastName}">Last Name</td>
                 <td class="px-3 py-2 whitespace-nowrap">
-                    <div th:each="emailObject : ${contact.emails}">
-                        <span th:text="${emailObject.label}"></span>
-                        <a th:href="@{${'mailto:' + emailObject.email}}" th:text="${emailObject.email}"></a>
+                    <div th:each="emailObject : ${contact.emails}" class="mb-1">
+                        <span th:text="${emailObject.label}" class="text-xs text-gray-500 block"></span>
+                        <a th:href="@{${'mailto:' + emailObject.email}}"
+                           th:text="${emailObject.email}"
+                           class="text-blue-600 hover:text-blue-800 underline"></a>
                     </div>
                 </td>
 
                 <td class="px-3 py-2 whitespace-nowrap">
-                    <div th:each="phoneObject : ${contact.phones}">
-                        <span th:text="${phoneObject.label}"></span>
-                        <a th:href="@{${'tel:' + phoneObject.phone}}" th:text="${phoneObject.phone}"></a>
+                    <div th:each="phoneObject : ${contact.phones}" class="mb-1">
+                        <span th:text="${phoneObject.label}" class="text-xs text-gray-500 block"></span>
+                        <a th:href="@{${'tel:' + phoneObject.phone}}"
+                           th:text="${phoneObject.phone}"
+                           class="text-blue-600 hover:text-blue-800 underline"></a>
                     </div>
                 </td>
 
                 <td class="px-3 py-2 whitespace-nowrap">
-                    <div th:each="networkObject : ${contact.networks}">
-                        <span th:text="${networkObject.label}"></span>
-                        <span th:text="${networkObject.account}"></span>
+                    <div th:each="networkObject : ${contact.networks}" class="mb-1">
+                        <span th:text="${networkObject.label}" class="text-xs text-gray-500 block"></span>
+                        <span th:text="${networkObject.account}" class="font-medium"></span>
                     </div>
                 </td>
 
-                <td>
-					<div class="sm:flex sm:gap-4" sec:authorize="isAuthenticated()">
-                    <button> <a th:href="@{|/contact/edit/${contact.id}}">Edit</a> </button>
-                    <form th:action="@{|/contact/remove/${contact.id}}" method="post">
-                        <button type="submit"> Remove </button>
-                    </form>
-					</div>
+                <td class="px-3 py-2 whitespace-nowrap" sec:authorize="isAuthenticated()">
+                    <div class="flex gap-2">
+                        <a th:href="@{|/contact/edit/${contact.id}}"
+                           class="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-600 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 transition-colors">
+                            Edit
+                        </a>
+                        <form th:action="@{|/contact/remove/${contact.id}}" method="post" class="inline">
+                            <button type="submit"
+                                    class="inline-flex items-center px-3 py-1 text-xs font-medium text-red-600 bg-red-50 border border-red-200 rounded-md hover:bg-red-100 transition-colors"
+                                    onclick="return confirm('Are you sure you want to remove this contact?')">
+                                Remove
+                            </button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             </tbody>
