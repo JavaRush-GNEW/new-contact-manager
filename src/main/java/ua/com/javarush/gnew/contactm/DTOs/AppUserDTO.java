@@ -17,5 +17,6 @@ public class AppUserDTO {
   private String username;
   @ToString.Exclude private String password;
   private String email;
+  private String imageUrl;
   private List<UserRole> userRole;
 }
