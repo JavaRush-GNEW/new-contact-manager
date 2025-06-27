@@ -1,5 +1,7 @@
 package ua.com.javarush.gnew.contactm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class Contact {
 
   @ManyToOne
   @JoinColumn(name = "contact_book_id")
+  @JsonBackReference
   private ContactBook contactBook;
 
   @Column(name = "name")
@@ -35,18 +38,21 @@ public class Contact {
   // Consider switching to LAZY loading if appropriate.
   @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Expose
+  @JsonManagedReference
   private List<Email> emails = new ArrayList<>();
 
   @Column(name = "last_name")
   @Expose
   private String lastName;
 
-  @OneToMany(mappedBy = "contact", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Expose
+  @JsonManagedReference
   private List<Phone> phones = new ArrayList<>();
 
   @OneToMany(mappedBy = "contact", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Expose
+  @JsonManagedReference
   private List<SocialNetwork> networks = new ArrayList<>();
 
   @Expose private String imageUrl;

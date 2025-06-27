@@ -1,6 +1,7 @@
 package ua.com.javarush.gnew.contactm.controller.web;
 
 import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
+import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.services.CloudinaryService;
 import ua.com.javarush.gnew.contactm.services.ContactService;
@@ -23,7 +25,12 @@ public class ContactController {
 
   @GetMapping("/edit/{id}")
   public String edit(@PathVariable Long id, Model model) {
-    ContactDTO dto = contactMapper.toDto(contactService.findById(id));
+    Optional<Contact> byId = contactService.findById(id);
+
+    // TODO: 404 if not found
+    Contact contact = byId.get();
+
+    ContactDTO dto = contactMapper.toDto(contact);
     model.addAttribute("contact", dto);
     return "contact/edit";
   }

@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.contactm.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import java.util.Date;
@@ -33,6 +34,7 @@ public class ContactBook {
 
   @OneToMany(mappedBy = "contactBook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @Expose
+  @JsonManagedReference
   private List<Contact> contacts;
 
   @CreationTimestamp

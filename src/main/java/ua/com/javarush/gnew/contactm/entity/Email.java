@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.contactm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class Email {
 
   @ManyToOne(fetch = FetchType.EAGER, optional = true)
   @JoinColumn(name = "contact_id", nullable = true)
+  @JsonBackReference
   private Contact contact;
 
   @Override
