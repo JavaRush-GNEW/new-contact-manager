@@ -1,4 +1,4 @@
-INSERT INTO app_user (
+INSERT INTO public.app_user (
     first_name,
     last_name,
     username,
@@ -18,8 +18,8 @@ INSERT INTO app_user (
              CURRENT_TIMESTAMP
          );
 
-INSERT INTO app_user_user_role (app_user_id, user_role) VALUES (
+INSERT INTO public.app_user_user_role (app_user_id, user_role) VALUES (
 
- (SELECT id FROM app_user WHERE username = 'test10'),
+ (SELECT id FROM public.app_user WHERE username = 'test10'),
          'ADMIN'
                                                                );
