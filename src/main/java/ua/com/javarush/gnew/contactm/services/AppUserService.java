@@ -3,6 +3,7 @@ package ua.com.javarush.gnew.contactm.services;
 import java.util.Arrays;
 import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.com.javarush.gnew.contactm.DTOs.AppUserDTO;
@@ -10,6 +11,7 @@ import ua.com.javarush.gnew.contactm.entity.AppUser;
 import ua.com.javarush.gnew.contactm.entity.UserRole;
 import ua.com.javarush.gnew.contactm.repository.AppUserRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AppUserService {
@@ -26,8 +28,13 @@ public class AppUserService {
     appUserRepository.save(appUser);
   }
 
-  public boolean existsByUserName(String userName) {
+  public boolean existsByUsername(String userName) {
     return appUserRepository.existsByUsername(userName);
+  }
+
+  public boolean existUsernamePassword(AppUserDTO appUserDto) {
+    AppUser appUser = findByUserName(appUserDto.getUsername());
+    return passwordEncoder.matches(appUserDto.getPassword(), appUser.getPassword());
   }
 
   public AppUser findByUserName(String userName) {
