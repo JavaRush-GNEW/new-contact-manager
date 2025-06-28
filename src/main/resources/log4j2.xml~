@@ -1,0 +1,34 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<Configuration status="warn" name="PropertiesConfig">-->
+
+<!--    <Appenders>-->
+<!--        &lt;!&ndash; Console Appender &ndash;&gt;-->
+<!--        <Console name="ConsoleAppender" target="SYSTEM_OUT">-->
+<!--            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] [%t] %-5level %logger{36} - %msg%n" />-->
+<!--        </Console>-->
+
+<!--        &lt;!&ndash; Rolling File Appender &ndash;&gt;-->
+<!--        <RollingFile name="RollingFileAppender"-->
+<!--                     fileName="${sys:user.dir}/logs/new_contact_manager.log"-->
+<!--                     filePattern="${sys:user.dir}/logs/new_contact_manager-%d{yyyy-MM-dd}-%i.log.gz">-->
+<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>-->
+<!--            <Policies>-->
+<!--                <TimeBasedTriggeringPolicy interval="1"/>-->
+<!--                <SizeBasedTriggeringPolicy size="10MB"/>-->
+<!--            </Policies>-->
+<!--        </RollingFile>-->
+<!--    </Appenders>-->
+
+<!--    <Loggers>-->
+<!--        &lt;!&ndash; Hibernate loggers &ndash;&gt;-->
+<!--        <Logger name="org.hibernate" level="warn" additivity="false"/>-->
+<!--        <Logger name="org.hibernate.SQL" level="warn" additivity="false"/>-->
+<!--        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="warn" additivity="false"/>-->
+
+<!--        &lt;!&ndash; Root logger &ndash;&gt;-->
+<!--        <Root level="info">-->
+<!--            <AppenderRef ref="ConsoleAppender"/>-->
+<!--            <AppenderRef ref="RollingFileAppender"/>-->
+<!--        </Root>-->
+<!--    </Loggers>-->
+<!--</Configuration>-->

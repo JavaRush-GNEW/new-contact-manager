@@ -17,6 +17,6 @@ logging:
     org.springframework.security: DEBUG
 
 cloudinary:
-  name: ${CLOUDINARY_NAME}
-  api-key: ${CLOUDINARY_API_KEY}
-  api-secret: ${CLOUDINARY_API_SECRET}
+  name: dru4hznjk
+  api-key: 374119777715921
+  api-secret: 9OfudXe_H4kM7o5NmwdDRXW8yuQ
