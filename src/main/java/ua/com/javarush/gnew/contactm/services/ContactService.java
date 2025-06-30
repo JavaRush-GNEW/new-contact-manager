@@ -1,5 +1,6 @@
 package ua.com.javarush.gnew.contactm.services;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
@@ -28,5 +29,9 @@ public class ContactService {
 
   public void delete(Long id) {
     contactRepository.deleteById(id);
+  }
+
+  public List<Contact> findAll() {
+    return contactRepository.findAll();
   }
 }
