@@ -7,13 +7,6 @@ server:
       enabled: false # disable the Whitelabel page
     include-message: always # always include the HTTP message
 
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/contact_manager_dev
-    username: root
-    password: root
-    driver-class-name: org.postgresql.Driver
-
   flyway:
     enabled: true
     locations: classpath:db/migration
@@ -21,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
 
 
 logging:
