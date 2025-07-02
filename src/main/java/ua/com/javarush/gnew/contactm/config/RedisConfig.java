@@ -21,35 +21,27 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @RequiredArgsConstructor
 public class RedisConfig {
 
-  /**
-   * Shared ObjectMapper with Hibernate support.
-   */
+  /** Shared ObjectMapper with Hibernate support. */
   @Bean
   public ObjectMapper redisObjectMapper() {
     Hibernate6Module hibernateModule = new Hibernate6Module();
     hibernateModule.configure(Hibernate6Module.Feature.FORCE_LAZY_LOADING, false);
     hibernateModule.configure(
-            Hibernate6Module.Feature.SERIALIZE_IDENTIFIER_FOR_LAZY_NOT_LOADED_OBJECTS, true);
+        Hibernate6Module.Feature.SERIALIZE_IDENTIFIER_FOR_LAZY_NOT_LOADED_OBJECTS, true);
 
     return new ObjectMapper().registerModule(hibernateModule);
   }
 
-  /**
-   * Generic JSON serializer using the shared ObjectMapper.
-   */
+  /** Generic JSON serializer using the shared ObjectMapper. */
   @Bean
   public RedisSerializer<Object> genericJsonSerializer(ObjectMapper redisObjectMapper) {
     return new GenericJackson2JsonRedisSerializer(redisObjectMapper);
   }
 
-  /**
-   * A RedisTemplate that uses String keys and JSON‐serialized values.
-   */
+  /** A RedisTemplate that uses String keys and JSON‐serialized values. */
   @Bean
   public RedisTemplate<String, Object> redisTemplate(
-          RedisConnectionFactory connectionFactory,
-          RedisSerializer<Object> genericJsonSerializer
-  ) {
+      RedisConnectionFactory connectionFactory, RedisSerializer<Object> genericJsonSerializer) {
     RedisTemplate<String, Object> template = new RedisTemplate<>();
     template.setConnectionFactory(connectionFactory);
 
@@ -67,22 +59,16 @@ public class RedisConfig {
     return template;
   }
 
-  /**
-   * RedisCacheManager that applies a 60‐minute TTL and JSON serialization.
-   */
+  /** RedisCacheManager that applies a 60‐minute TTL and JSON serialization. */
   @Bean
   public RedisCacheManager cacheManager(
-          RedisConnectionFactory connectionFactory,
-          RedisSerializer<Object> genericJsonSerializer
-  ) {
-    RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
+      RedisConnectionFactory connectionFactory, RedisSerializer<Object> genericJsonSerializer) {
+    RedisCacheConfiguration cacheConfig =
+        RedisCacheConfiguration.defaultCacheConfig()
             .entryTtl(Duration.ofMinutes(60))
             .serializeValuesWith(
-                    RedisSerializationContext.SerializationPair.fromSerializer(genericJsonSerializer)
-            );
+                RedisSerializationContext.SerializationPair.fromSerializer(genericJsonSerializer));
 
-    return RedisCacheManager.builder(connectionFactory)
-            .cacheDefaults(cacheConfig)
-            .build();
+    return RedisCacheManager.builder(connectionFactory).cacheDefaults(cacheConfig).build();
   }
 }
