@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
-import ua.com.javarush.gnew.contactm.repository.ContactRepository;
+import ua.com.javarush.gnew.contactm.services.ContactService;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/contact")
 public class ContactControllerApi {
-  private final ContactRepository contactRepository;
+  private final ContactService contactService;
   private final ContactMapper contactMapper;
 
   @PreAuthorize("hasRole('USER')")
@@ -35,7 +35,7 @@ public class ContactControllerApi {
   @GetMapping
   public ResponseEntity<ContactDTO> getContact(@RequestParam("id") Long id) {
     log.debug("getContact: id={}", id);
-    return contactRepository
+    return contactService
         .findById(id)
         .map(contact -> new ResponseEntity<>(contactMapper.toDto(contact), HttpStatus.OK))
         .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -44,14 +44,14 @@ public class ContactControllerApi {
   @PostMapping
   public ResponseEntity<ContactDTO> save(@RequestBody ContactDTO contactDTO) {
     Contact contact = contactMapper.toEntity(contactDTO);
-    Contact saved = contactRepository.save(contact);
+    Contact saved = contactService.save(contact);
     return new ResponseEntity<>(contactMapper.toDto(saved), HttpStatus.CREATED);
   }
 
   @PutMapping
   public ResponseEntity<ContactDTO> update(
       @RequestParam("id") Long id, @RequestBody ContactDTO contactDTO) {
-    Optional<Contact> existingOpt = contactRepository.findById(id);
+    Optional<Contact> existingOpt = contactService.findById(id);
     if (existingOpt.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -59,14 +59,14 @@ public class ContactControllerApi {
     Contact contactToUpdate = contactMapper.toEntity(contactDTO);
     contactToUpdate.setId(id);
 
-    Contact saved = contactRepository.save(contactToUpdate);
+    Contact saved = contactService.save(contactToUpdate);
     return new ResponseEntity<>(contactMapper.toDto(saved), HttpStatus.OK);
   }
 
   @DeleteMapping
   public ResponseEntity<Void> delete(@RequestParam("id") Long id) {
-    if (contactRepository.existsById(id)) {
-      contactRepository.deleteById(id);
+    if (contactService.existsById(id)) {
+      contactService.deleteById(id);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -16,7 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.entity.Contact;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
-import ua.com.javarush.gnew.contactm.repository.ContactRepository;
+import ua.com.javarush.gnew.contactm.services.ContactService;
 
 @WebMvcTest(
     value = ContactControllerApi.class,
@@ -25,7 +26,7 @@ class ContactControllerApiTest {
 
   @Autowired private MockMvc mvc;
 
-  @MockitoBean private ContactRepository contactRepository;
+  @MockitoBean private ContactService contactService;
 
   @MockitoBean private ContactMapper contactMapper;
 
@@ -39,7 +40,7 @@ class ContactControllerApiTest {
 
     ContactDTO contactDTO = ContactDTO.builder().id(id).name(name).build();
 
-    when(contactRepository.findById(id)).thenReturn(java.util.Optional.of(contact));
+    when(contactService.findById(id)).thenReturn(Optional.ofNullable(contact));
     when(contactMapper.toDto(contact)).thenReturn(contactDTO);
 
     // Act & Assert
@@ -50,5 +51,19 @@ class ContactControllerApiTest {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(id))
         .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name));
+  }
+
+  @Test
+  void getContact_ShouldReturnStatus404WhenContactNotExists() throws Exception {
+    // Arrange
+    long id = 1L;
+
+    when(contactService.findById(id)).thenReturn(Optional.empty());
+
+    // Act & Assert
+    String path = "/api/v1/contact";
+
+    mvc.perform(get(path).param("id", "1").accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isNotFound());
   }
 }
