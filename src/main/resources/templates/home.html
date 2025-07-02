@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,16 @@
 <div th:if="${param.continue}">You have been logged in successfuly</div>
 <div class="">
     <!-- Display the project name -->
-    <div th:text="${tableName}"></div>
+    <div class="flex items-center justify-between mb-2">
+        <div th:text="${tableName}"></div>
+
+        <div sec:authorize="isAuthenticated()" style="transform: translateX(-150px);">
+            <a th:href="@{/contact/add}"
+               class="inline-flex items-center px-5 py-3 text-sm font-medium text-green-600 bg-green-50 border border-green-200 rounded-md hover:bg-green-100 transition-colors">
+                Add Contact
+            </a>
+        </div>
+    </div>
 
     <!--/*@thymesVar id="contacts" type="java.util.List"*/-->
     <div th:replace="~{components/table-component :: contactTable( ${contacts} ) }"></div>

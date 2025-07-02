@@ -1,11 +1,12 @@
 package ua.com.javarush.gnew.contactm.DTOs;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@ToString
 @AllArgsConstructor
 @Builder
 public class ContactDTO {
@@ -16,4 +17,10 @@ public class ContactDTO {
   private List<EmailDTO> emails;
   private List<PhoneDTO> phones;
   private List<SocialNetworkDTO> networks;
+
+  public ContactDTO() {
+    this.emails = new ArrayList<>();
+    this.phones = new ArrayList<>();
+    this.networks = new ArrayList<>();
+  }
 }

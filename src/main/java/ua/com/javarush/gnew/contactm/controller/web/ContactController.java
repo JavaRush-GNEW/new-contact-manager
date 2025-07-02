@@ -10,6 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.com.javarush.gnew.contactm.DTOs.ContactDTO;
 import ua.com.javarush.gnew.contactm.entity.Contact;
+import ua.com.javarush.gnew.contactm.DTOs.EmailDTO;
+import ua.com.javarush.gnew.contactm.DTOs.PhoneDTO;
+import ua.com.javarush.gnew.contactm.DTOs.SocialNetworkDTO;
 import ua.com.javarush.gnew.contactm.mapper.ContactMapper;
 import ua.com.javarush.gnew.contactm.services.CloudinaryService;
 import ua.com.javarush.gnew.contactm.services.ContactService;
@@ -31,6 +34,11 @@ public class ContactController {
     Contact contact = byId.get();
 
     ContactDTO dto = contactMapper.toDto(contact);
+
+    if (dto.getEmails().isEmpty()) dto.getEmails().add(new EmailDTO());
+    if (dto.getPhones().isEmpty()) dto.getPhones().add(new PhoneDTO());
+    if (dto.getNetworks().isEmpty()) dto.getNetworks().add(new SocialNetworkDTO());
+
     model.addAttribute("contact", dto);
     return "contact/edit";
   }
@@ -56,6 +64,41 @@ public class ContactController {
       redirectAttributes.addFlashAttribute("error", "Failed to upload image: " + e.getMessage());
     } catch (Exception e) {
       redirectAttributes.addFlashAttribute("error", "Failed to update contact: " + e.getMessage());
+    }
+
+    return "redirect:/";
+  }
+
+  @GetMapping("/add")
+  public String add(Model model) {
+    ContactDTO dto = new ContactDTO();
+    dto.getEmails().add(new EmailDTO());
+    dto.getPhones().add(new PhoneDTO());
+    dto.getNetworks().add(new SocialNetworkDTO());
+    model.addAttribute("contact", dto);
+
+    return "contact/edit";
+  }
+
+  @PostMapping("/add")
+  public String saveContact(
+      @ModelAttribute ContactDTO contactDTO,
+      @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+      RedirectAttributes redirectAttributes) {
+
+    try {
+      if (imageFile != null && !imageFile.isEmpty()) {
+        String imageUrl = imageService.upload(imageFile);
+        contactDTO.setImageUrl(imageUrl);
+      }
+
+      contactService.save(contactDTO);
+      redirectAttributes.addFlashAttribute("success", "Contact added successfully!");
+
+    } catch (IOException e) {
+      redirectAttributes.addFlashAttribute("error", "Failed to upload image: " + e.getMessage());
+    } catch (Exception e) {
+      redirectAttributes.addFlashAttribute("error", "Failed to add contact: " + e.getMessage());
     }
 
     return "redirect:/";
