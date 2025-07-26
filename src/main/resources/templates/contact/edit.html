@@ -17,10 +17,9 @@
         <form th:action="@{/contact/edit}" th:object="${contact}" method="post" enctype="multipart/form-data" class="space-y-6">
             <input type="hidden" th:field="*{id}" />
 
-            <!-- Current Image Display -->
+            <!-- Current Image -->
             <div class="text-center mb-4" th:if="${contact.imageUrl}">
-                <img th:src="${contact.imageUrl}" 
-                     alt="Current contact image" 
+                <img th:src="${contact.imageUrl}" alt="Current contact image"
                      class="w-24 h-24 rounded-full object-cover border-4 border-gray-200 shadow-md mx-auto">
                 <p class="text-sm text-gray-500 mt-2">Current Image</p>
             </div>
@@ -39,62 +38,60 @@
                 <input id="name" type="text" th:field="*{name}" required
                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
             </div>
-			
-			<div>
-			    <label for="lastname" class="block text-sm font-medium text-gray-700">Lastname</label>
-			    <input id="lastname" type="text" th:field="*{lastName}" required
-			           class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
-			</div>
+
+            <!-- Lastname -->
+            <div>
+                <label for="lastname" class="block text-sm font-medium text-gray-700">Lastname</label>
+                <input id="lastname" type="text" th:field="*{lastName}" required
+                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
+            </div>
 
             <!-- Emails -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Emails</label>
-                <div th:each="email, stat : *{emails}" class="flex items-center mb-3 space-x-2">
-                    <!-- Preserve existing email IDs -->
-                    <input type="hidden" th:field="*{emails[__${stat.index}__].id}" />
-                    <input type="text"
-                           th:field="*{emails[__${stat.index}__].label}"
-                           placeholder="Label"
-                           class="w-1/3 border border-gray-300 rounded-md p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
-                    <input type="email"
-                           th:field="*{emails[__${stat.index}__].email}"
-                           placeholder="Email"
-                           class="flex-1 border border-gray-300 rounded-md p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
+                <div id="emails-container">
+                    <div th:each="email, stat : *{emails}" class="email-entry flex items-center mb-3 space-x-2">
+                        <input type="hidden" th:field="*{emails[__${stat.index}__].id}" />
+                        <input type="text" th:field="*{emails[__${stat.index}__].label}" placeholder="Label"
+                               class="w-1/3 border border-gray-300 rounded-md p-2" />
+                        <input type="email" th:field="*{emails[__${stat.index}__].email}" placeholder="Email"
+                               class="flex-1 border border-gray-300 rounded-md p-2" />
+                        <button type="button" onclick="removeField(this)" class="text-red-500 text-xl">−</button>
+                    </div>
                 </div>
+                <button type="button" onclick="addEmailField()" class="text-green-600 mt-1">+ Add Email</button>
             </div>
 
             <!-- Phones -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Phones</label>
-                <div th:each="phone, stat : *{phones}" class="flex items-center mb-3 space-x-2">
-                    <!-- Preserve existing phone IDs -->
-                    <input type="hidden" th:field="*{phones[__${stat.index}__].id}" />
-                    <input type="text"
-                           th:field="*{phones[__${stat.index}__].label}"
-                           placeholder="Label"
-                           class="w-1/3 border border-gray-300 rounded-md p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
-                    <input type="text"
-                           th:field="*{phones[__${stat.index}__].phone}"
-                           placeholder="Phone"
-                           class="flex-1 border border-gray-300 rounded-md p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
+                <div id="phones-container">
+                    <div th:each="phone, stat : *{phones}" class="phone-entry flex items-center mb-3 space-x-2">
+                        <input type="hidden" th:field="*{phones[__${stat.index}__].id}" />
+                        <input type="text" th:field="*{phones[__${stat.index}__].label}" placeholder="Label"
+                               class="w-1/3 border border-gray-300 rounded-md p-2" />
+                        <input type="text" th:field="*{phones[__${stat.index}__].phone}" placeholder="Phone"
+                               class="flex-1 border border-gray-300 rounded-md p-2" />
+                        <button type="button" onclick="removeField(this)" class="text-red-500 text-xl">−</button>
+                    </div>
                 </div>
+                <button type="button" onclick="addPhoneField()" class="text-green-600 mt-1">+ Add Phone</button>
             </div>
 
             <!-- Social Networks -->
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Social Networks</label>
-                <div th:each="net, stat : *{networks}" class="flex items-center mb-3 space-x-2">
-                    <!-- Preserve existing network IDs -->
-                    <input type="hidden" th:field="*{networks[__${stat.index}__].id}" />
-                    <input type="text"
-                           th:field="*{networks[__${stat.index}__].label}"
-                           placeholder="Network"
-                           class="w-1/3 border border-gray-300 rounded-md p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
-                    <input type="text"
-                           th:field="*{networks[__${stat.index}__].account}"
-                           placeholder="Profile name"
-                           class="flex-1 border border-gray-300 rounded-md p-2 focus:ring focus:ring-indigo-200 focus:outline-none" />
+                <div id="networks-container">
+                    <div th:each="net, stat : *{networks}" class="network-entry flex items-center mb-3 space-x-2">
+                        <input type="hidden" th:field="*{networks[__${stat.index}__].id}" />
+                        <input type="text" th:field="*{networks[__${stat.index}__].label}" placeholder="Network"
+                               class="w-1/3 border border-gray-300 rounded-md p-2" />
+                        <input type="text" th:field="*{networks[__${stat.index}__].account}" placeholder="Profile name"
+                               class="flex-1 border border-gray-300 rounded-md p-2" />
+                        <button type="button" onclick="removeField(this)" class="text-red-500 text-xl">−</button>
+                    </div>
                 </div>
+                <button type="button" onclick="addNetworkField()" class="text-green-600 mt-1">+ Add Network</button>
             </div>
 
             <!-- Submit -->
@@ -109,6 +106,58 @@
 </div>
 
 <div th:replace="~{components/footer-component}"></div>
+
+<!-- JavaScript -->
+<script>
+    function removeField(button) {
+        const entry = button.closest('.email-entry, .phone-entry, .network-entry');
+        if (entry && entry.parentNode.children.length > 1) {
+            entry.remove();
+        }
+    }
+
+    function addEmailField() {
+        const container = document.getElementById('emails-container');
+        const index = container.children.length;
+        const newField = document.createElement('div');
+        newField.className = 'email-entry flex items-center mb-3 space-x-2';
+        newField.innerHTML = `
+        <input type="hidden" name="emails[${index}].id" />
+        <input type="text" name="emails[${index}].label" placeholder="Label" class="w-1/3 border border-gray-300 rounded-md p-2" />
+        <input type="email" name="emails[${index}].email" placeholder="Email" class="flex-1 border border-gray-300 rounded-md p-2" />
+        <button type="button" onclick="removeField(this)" class="text-red-500 text-xl">−</button>
+    `;
+        container.appendChild(newField);
+    }
+
+    function addPhoneField() {
+        const container = document.getElementById('phones-container');
+        const index = container.children.length;
+        const newField = document.createElement('div');
+        newField.className = 'phone-entry flex items-center mb-3 space-x-2';
+        newField.innerHTML = `
+        <input type="hidden" name="phones[${index}].id" />
+        <input type="text" name="phones[${index}].label" placeholder="Label" class="w-1/3 border border-gray-300 rounded-md p-2" />
+        <input type="text" name="phones[${index}].phone" placeholder="Phone" class="flex-1 border border-gray-300 rounded-md p-2" />
+        <button type="button" onclick="removeField(this)" class="text-red-500 text-xl">−</button>
+    `;
+        container.appendChild(newField);
+    }
+
+    function addNetworkField() {
+        const container = document.getElementById('networks-container');
+        const index = container.children.length;
+        const newField = document.createElement('div');
+        newField.className = 'network-entry flex items-center mb-3 space-x-2';
+        newField.innerHTML = `
+        <input type="hidden" name="networks[${index}].id" />
+        <input type="text" name="networks[${index}].label" placeholder="Network" class="w-1/3 border border-gray-300 rounded-md p-2" />
+        <input type="text" name="networks[${index}].account" placeholder="Profile name" class="flex-1 border border-gray-300 rounded-md p-2" />
+        <button type="button" onclick="removeField(this)" class="text-red-500 text-xl">−</button>
+    `;
+        container.appendChild(newField);
+    }
+</script>
 
 </body>
 </html>
